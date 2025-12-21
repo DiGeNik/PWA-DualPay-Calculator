@@ -187,8 +187,8 @@
             </div>
         </div>
 
-        <footer class="mt-10 text-center text-[8px] text-slate-400 font-bold uppercase tracking-[0.4em] opacity-40">
-            Professional • v3.0 • DualPay
+        <footer class="mt-10 text-center text-[9px] text-slate-400 font-bold uppercase tracking-[0.3em] opacity-60">
+            Курс: 1 EUR = 1.95583 BGN
         </footer>
     </div>
 
@@ -215,7 +215,7 @@
                         icon.style.fontSize = screenWidth < 768 ? '2.8rem' : '4rem';
                     } else {
                         icon.innerText = 'лв';
-                        icon.style.fontSize = screenWidth < 768 ? '3rem' : '4.5rem'; // Още по-едро лв във фона
+                        icon.style.fontSize = screenWidth < 768 ? '3rem' : '4.5rem'; 
                     }
                     icon.style.animationDelay = (Math.random() * -15).toFixed(2) + 's';
                     icon.style.animationDuration = (12 + Math.random() * 8).toFixed(2) + 's';
@@ -280,7 +280,6 @@
 
         [dueInput, dueCurrSelect, payBgnInput, payEurInput].forEach(el => el.addEventListener('input', calculate));
 
-        // Bold SVG for PWA Manifest
         const iconSvg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><rect width="512" height="512" rx="120" fill="#2563eb"/><text x="120" y="290" fill="white" font-family="Comfortaa, sans-serif" font-size="160" text-anchor="middle" font-weight="bold">€</text><text x="390" y="290" fill="white" font-family="Comfortaa, sans-serif" font-size="200" text-anchor="middle" font-weight="bold">лв</text><path d="M190 240 L322 240 M280 195 L322 240 L280 285 M232 195 L190 240 L232 285" stroke="white" stroke-width="35" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
         const iconBlob = new Blob([iconSvg], {type: 'image/svg+xml'});
         const iconUrl = URL.createObjectURL(iconBlob);
