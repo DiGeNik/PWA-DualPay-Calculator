@@ -85,7 +85,7 @@
             box-shadow: 0 40px 100px -20px rgba(0,0,0,0.15);
         }
         
-        /* ЛОГО ПЛОЧКА */
+        /* ЛОГО ПЛОЧКА - ФИНАЛНА КОРЕКЦИЯ */
         .logo-tile {
             width: 140px; 
             height: 110px;
@@ -95,42 +95,49 @@
             align-items: center; 
             justify-content: center;
             box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.5);
-            padding: 0;
             overflow: hidden;
+            position: relative;
         }
 
         .logo-inner {
             display: flex; 
             align-items: center; 
-            justify-content: center; 
-            color: var(--gold);
+            justify-content: center;
             width: 100%;
+            /* Премахваме абсолютите и ползваме чист Flex за подравняване */
         }
 
-        /* ОЩЕ ПО-КРАЙНО ПРЕМЕСТВАНЕ НАДЯСНО */
+        .logo-text-group {
+            display: flex;
+            align-items: center;
+            gap: 2px; /* Фиксирано малко разстояние между еврото и стрелката */
+            z-index: 10;
+        }
+
         .logo-eur { 
             font-size: 32px; 
-            margin-top: 4px; 
-            line-height: 1; 
-            transform: translateX(38px); /* Още по-голямо отместване надясно */
+            color: var(--gold);
+            line-height: 1;
+            margin-top: 4px;
         }
         
         .logo-arrow { 
             font-size: 20px; 
             font-weight: 900; 
             color: white; 
-            line-height: 1; 
-            margin: 0 4px;
-            transform: translateX(38px); /* Още по-голямо отместване надясно */
+            line-height: 1;
         }
         
+        .logo-lev-container {
+            margin-left: -15px; /* Лъвът "захапва" стрелката, за да се елиминира празното пространство */
+            z-index: 5;
+        }
+
         .logo-lev-icon { 
-            height: 85px; 
+            height: 95px; /* Малко по-голям за детайлност */
             width: auto;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
             display: block;
-            flex-shrink: 0;
-            /* Лъвът е нашата котва вдясно */
         }
 
         /* ИНПУТ ПОЛЕТА */
@@ -180,9 +187,13 @@
         <div class="flex flex-col items-center mb-10">
             <div class="logo-tile mb-4">
                 <div class="logo-inner artistic-font">
-                    <span class="logo-eur">€</span>
-                    <span class="logo-arrow">⇄</span>
-                    <img src="lv_icon.svg" class="logo-lev-icon" alt="лв" onerror="this.outerHTML='<span class=\'text-4xl\'>лв</span>'">
+                    <div class="logo-text-group">
+                        <span class="logo-eur">€</span>
+                        <span class="logo-arrow">⇄</span>
+                    </div>
+                    <div class="logo-lev-container">
+                        <img src="lv_icon.svg" class="logo-lev-icon" alt="лв" onerror="this.outerHTML='<span class=\'text-4xl text-white ml-2\'>лв</span>'">
+                    </div>
                 </div>
             </div>
             <h1 class="text-3xl font-black text-slate-800 artistic-font tracking-tight">DualPay</h1>
