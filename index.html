@@ -57,19 +57,19 @@
             user-select: none;
         }
 
-        /* МАКСИМАЛНО ПОДСИЛВАНЕ НА ЛЪВА */
+        /* УВЕЛИЧЕН РАЗМЕР НА ЛЪВА В МРЕЖАТА */
         .bg-symbol-img {
-            width: 42px; /* По-голям размер за повече присъствие */
-            height: 42px;
-            opacity: 0.8; /* Почти плътен, за да не е блед */
+            width: 52px; /* По-голям размер, за да не е дребничко */
+            height: 52px;
+            opacity: 0.7; /* Достатъчно видимо, но не пречещо на интерфейса */
             display: block;
-            filter: saturate(2) brightness(1.1) drop-shadow(0 0 1px rgba(180, 120, 0, 0.5));
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.05));
             animation: float-animation 20s infinite ease-in-out;
         }
 
-        /* ЕВРОТО В МРЕЖАТА - остава блед фон */
+        /* ЕВРОТО В МРЕЖАТА */
         .bg-euro-text {
-            font-size: 28px;
+            font-size: 34px;
             opacity: 0.15; 
             animation: float-animation 20s infinite ease-in-out;
             display: flex;
@@ -113,21 +113,22 @@
             margin: 1.5rem 0;
         }
 
+        /* КОРЕКЦИЯ НА ЛОГОТО В ГЛАВНАТА ПЛОЧКА */
         .icon-container {
-            width: 52px; 
-            height: 52px;
+            width: 60px; /* По-голям контейнер */
+            height: 60px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-left: -14px; 
-            margin-bottom: -8px;
+            margin-left: -16px; 
+            margin-bottom: -6px;
         }
 
         .lion-icon-main {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            filter: saturate(1.8) drop-shadow(0 2px 5px rgba(0,0,0,0.15));
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
         }
 
         .euro-symbol {
@@ -137,6 +138,7 @@
         @media screen and (max-width: 768px) {
             input { font-size: 16px !important; }
             .app-window { padding: 1.25rem !important; margin: 0.5rem; border-radius: 3rem; }
+            .bg-symbol-img { width: 44px; height: 44px; }
         }
     </style>
 </head>
@@ -225,7 +227,7 @@
             
             const screenWidth = window.innerWidth;
             const screenHeight = window.innerHeight;
-            const cellSize = screenWidth < 768 ? 95 : 130; 
+            const cellSize = screenWidth < 768 ? 100 : 140; 
             const cols = Math.ceil(screenWidth / cellSize);
             const rows = Math.ceil(screenHeight / cellSize);
             
