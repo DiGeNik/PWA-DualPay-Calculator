@@ -85,23 +85,23 @@
             box-shadow: 0 40px 100px -20px rgba(0,0,0,0.15);
         }
         
-        /* ЛОГО ПЛОЧКА - ПРЕЦИЗНО ПОДРАВНЯВАНЕ */
+        /* ЛОГО ПЛОЧКА */
         .logo-tile {
-            width: 190px; 
-            height: 100px;
+            width: 155px; 
+            height: 90px;
             background-color: var(--primary-blue);
             border-radius: 2rem;
             display: flex;
             align-items: center;
-            justify-content: flex-start;
+            justify-content: center; 
             box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.5);
-            padding-left: 24px;
             overflow: hidden;
             position: relative;
+            padding: 0 10px;
         }
 
         .logo-eur { 
-            font-size: 36px; 
+            font-size: 32px; 
             color: var(--gold);
             line-height: 1;
             flex-shrink: 0;
@@ -109,24 +109,28 @@
         }
         
         .logo-arrow { 
-            font-size: 32px; 
-            font-weight: 400; 
-            color: white; 
+            font-size: 28px; 
+            color: var(--gold); 
             line-height: 1;
             flex-shrink: 0;
-            opacity: 0.9;
-            margin-left: 28px; 
+            margin: 0 10px; 
             z-index: 2;
         }
         
         .logo-lev-img {
-            height: 90px; 
+            height: 80px; 
             width: auto;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
             flex-shrink: 0;
-            margin-left: 4px; /* НАМАЛЕНО: Прибираме лъва малко наляво */
-            margin-right: -10px; /* КОРИГИРАНО: Намалена компенсация */
+            margin-right: -5px;
             z-index: 1;
+        }
+
+        /* Цвят за временния текст "лв", ако иконата липсва */
+        .fallback-lev {
+            color: var(--gold);
+            font-size: 1.5rem;
+            font-weight: 800;
         }
 
         /* ИНПУТ ПОЛЕТА */
@@ -177,7 +181,8 @@
             <div class="logo-tile mb-4">
                 <span class="logo-eur artistic-font">€</span>
                 <span class="logo-arrow">↔</span>
-                <img src="lv_icon.svg" class="logo-lev-img" alt="лв" onerror="this.outerHTML='<span class=\'text-white text-3xl font-bold ml-4\'>лв</span>'">
+                <!-- Променен цвят на временния текст (onerror) -->
+                <img src="lv_icon.svg" class="logo-lev-img" alt="лв" onerror="this.outerHTML='<span class=\'fallback-lev\'>лв</span>'">
             </div>
             <h1 class="text-3xl font-black text-slate-800 artistic-font tracking-tight">DualPay</h1>
             <p class="text-slate-500 text-[10px] font-bold uppercase tracking-[0.3em]">Smart Cash Control</p>
@@ -234,7 +239,7 @@
 
         <footer class="mt-12 text-center text-slate-400">
             <div class="text-[10px] font-bold uppercase tracking-[0.2em] mb-1">Курс: 1 EUR = 1.95583 BGN</div>
-            <div class="text-[9px] font-medium opacity-60 tracking-[0.1em]">DiNikolova ©</div>
+            <div class="text-[11px] font-bold opacity-80 tracking-[0.1em]">DiNikolova ©</div>
         </footer>
     </div>
 
@@ -301,7 +306,7 @@
             const paidInEur = paidEur + (paidBgn / RATE);
             
             if (due <= 0 && (paidBgn > 0 || paidEur > 0)) {
-                // Продължи без грешка, ако само въвеждаме платено
+                // Продължи
             } else if (due <= 0) {
                 resultBox.classList.add('hidden');
                 resultBox.classList.remove('scale-100', 'opacity-100');
