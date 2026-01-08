@@ -85,7 +85,7 @@
             box-shadow: 0 40px 100px -20px rgba(0,0,0,0.15);
         }
         
-        /* ЛОГО ПЛОЧКА - ПРЕЦИЗНО ПОДРАВНЯВАНЕ */
+        /* ЛОГО ПЛОЧКА - ПЕРФЕКТЕН БАЛАНС */
         .logo-tile {
             width: 135px;
             height: 85px;
@@ -93,11 +93,11 @@
             border-radius: 2rem;
             display: flex;
             align-items: center;
-            justify-content: flex-end; 
+            justify-content: center; /* Промяна на center за по-добра симетрия на цялата група */
             box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.5);
             overflow: hidden;
             position: relative;
-            padding-right: 2px; /* Намалено отстояние за по-голяма близост до ръба */
+            padding-left: 10px; /* Малко буфер отляво */
         }
 
         .logo-eur { 
@@ -106,7 +106,7 @@
             line-height: 1;
             flex-shrink: 0;
             z-index: 2;
-            margin-right: 1px;
+            margin-right: -2px; /* Приближаване към стрелката */
         }
         
         .logo-arrow { 
@@ -114,8 +114,9 @@
             color: var(--gold); 
             line-height: 1;
             flex-shrink: 0;
-            margin: 0 3px; 
+            margin-right: -10px; /* Силно избутване на стрелката надясно към лъва */
             z-index: 2;
+            position: relative;
         }
         
         .logo-lev-img {
@@ -123,7 +124,7 @@
             width: auto;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
             flex-shrink: 0;
-            margin-right: -8px; /* Избутваме лъва още по-надясно */
+            margin-right: -10px; /* Лъвът остава в десния край */
             z-index: 1;
         }
 
@@ -131,7 +132,7 @@
             color: var(--gold);
             font-size: 1.35rem;
             font-weight: 800;
-            margin-right: 10px;
+            margin-left: 15px;
         }
 
         /* ИНПУТ ПОЛЕТА */
