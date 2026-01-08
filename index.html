@@ -57,18 +57,20 @@
             user-select: none;
         }
 
-        /* Подобрена видимост на символите в мрежата */
+        /* ПОДСИЛВАНЕ НА ЛЪВА (SVG иконата) */
         .bg-symbol-img {
-            width: 32px;
-            height: 32px;
-            opacity: 0.25; /* Значително по-висока прозрачност за по-добра видимост */
+            width: 34px;
+            height: 34px;
+            opacity: 0.5; /* Значително по-висока плътност за лъва */
             display: block;
+            filter: saturate(1.8) brightness(1.1); /* Подсилване на златистия цвят */
             animation: float-animation 20s infinite ease-in-out;
         }
 
+        /* ЕВРОТО (Текст) */
         .bg-euro-text {
-            font-size: 26px;
-            opacity: 0.25;
+            font-size: 28px;
+            opacity: 0.25; /* Запазваме го по-бледо, за да не доминира над лъва */
             animation: float-animation 20s infinite ease-in-out;
             display: flex;
             align-items: center;
@@ -112,19 +114,20 @@
         }
 
         .icon-container {
-            width: 46px; 
-            height: 46px;
+            width: 48px; 
+            height: 48px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-left: -10px; 
-            margin-bottom: -12px;
+            margin-left: -12px; 
+            margin-bottom: -10px;
         }
 
         .lion-icon-main {
             width: 100%;
             height: 100%;
             object-fit: contain;
+            filter: saturate(1.5) drop-shadow(0 2px 4px rgba(0,0,0,0.1));
         }
 
         .euro-symbol {
@@ -222,7 +225,7 @@
             
             const screenWidth = window.innerWidth;
             const screenHeight = window.innerHeight;
-            const cellSize = screenWidth < 768 ? 90 : 115; 
+            const cellSize = screenWidth < 768 ? 90 : 120; 
             const cols = Math.ceil(screenWidth / cellSize);
             const rows = Math.ceil(screenHeight / cellSize);
             
@@ -248,7 +251,6 @@
         }
 
         window.addEventListener('resize', initBackground);
-        // Изчакваме пълното зареждане на всички елементи, включително иконата
         window.onload = initBackground;
 
         const RATE = 1.95583;
