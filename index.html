@@ -101,23 +101,25 @@
 
         /* Контейнер за иконата с фини настройки */
         .icon-container {
-            width: 50px; /* Увеличен размер на контейнера */
+            width: 50px; 
             height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-left: -12px; /* Леко засилено застъпване за баланс */
-            margin-bottom: -6px; /* Запазена ниска позиция */
+            margin-left: -12px; 
+            margin-bottom: -10px; /* Свален още малко надолу (беше -6px) */
         }
 
         .lion-icon-main {
-            width: 115%; /* Увеличен мащаб на лъва вътре в контейнера */
+            width: 115%; 
             height: 115%;
             object-fit: contain;
+            /* Симулация на запълване чрез филтър за засилване на тъмните части */
+            filter: contrast(1.2) brightness(0.9);
         }
 
         .euro-symbol {
-            margin-bottom: -4px; /* Сваляме еврото надолу */
+            margin-bottom: -4px;
         }
 
         @media screen and (max-width: 768px) {
@@ -135,7 +137,7 @@
             <div class="w-24 h-24 bg-blue-600 rounded-[2.5rem] flex items-center justify-center shadow-2xl mb-4 relative overflow-hidden">
                 <div class="absolute inset-0 bg-white opacity-10 transform -skew-x-12"></div>
                 <div class="flex items-end z-10 pb-2"> 
-                    <!-- Евро символ - свален с маржин -->
+                    <!-- Евро символ -->
                     <span class="lion-gold artistic-font text-4xl font-black drop-shadow-sm leading-none mr-1 euro-symbol">€</span>
                     
                     <!-- Стрелки -->
