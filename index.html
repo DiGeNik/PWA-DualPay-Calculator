@@ -57,19 +57,19 @@
             user-select: none;
         }
 
-        /* ОПТИМАЛЕН РАЗМЕР ЗА ЛЪВА В МРЕЖАТА */
+        /* РАЗМЕР НА ЛЪВА В МРЕЖАТА */
         .bg-symbol-img {
             width: 48px; 
             height: 48px;
-            opacity: 0.55; /* Балансирана видимост */
+            opacity: 0.55;
             display: block;
             filter: drop-shadow(0 1px 2px rgba(0,0,0,0.08));
             animation: float-animation 20s infinite ease-in-out;
         }
 
-        /* ЕВРОТО В МРЕЖАТА */
+        /* ЕВРОТО В МРЕЖАТА - НАМАЛЕНО */
         .bg-euro-text {
-            font-size: 32px;
+            font-size: 26px; /* Намалено от 32px */
             opacity: 0.12; 
             animation: float-animation 20s infinite ease-in-out;
             display: flex;
@@ -113,14 +113,14 @@
             margin: 1.5rem 0;
         }
 
-        /* БАЛАНСИРАНО ЛОГО В ГЛАВНАТА ПЛОЧКА */
+        /* ЛОГО В ГЛАВНАТА ПЛОЧКА - НАМАЛЕНО ЕВРО */
         .icon-container {
             width: 56px; 
             height: 56px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-left: -14px; 
+            margin-left: -12px; 
             margin-bottom: -5px;
         }
 
@@ -132,14 +132,15 @@
         }
 
         .euro-symbol {
-            margin-bottom: -4px;
+            margin-bottom: -2px; /* Лека корекция на височината */
         }
 
         @media screen and (max-width: 768px) {
             input { font-size: 16px !important; }
             .app-window { padding: 1.25rem !important; margin: 0.5rem; border-radius: 3rem; }
             .bg-symbol-img { width: 40px; height: 40px; }
-            .icon-container { width: 50px; height: 50px; margin-left: -12px; }
+            .icon-container { width: 50px; height: 50px; margin-left: -10px; }
+            .bg-euro-text { font-size: 22px; }
         }
     </style>
 </head>
@@ -152,7 +153,8 @@
             <div class="w-24 h-24 bg-blue-600 rounded-[2.5rem] flex items-center justify-center shadow-2xl mb-4 relative overflow-hidden">
                 <div class="absolute inset-0 bg-white opacity-10 transform -skew-x-12"></div>
                 <div class="flex items-end z-10 pb-2"> 
-                    <span class="currency-gold artistic-font text-4xl font-bold drop-shadow-sm leading-none mr-1 euro-symbol">€</span>
+                    <!-- Намален размер на Евро символа тук: text-3xl вместо text-4xl -->
+                    <span class="currency-gold artistic-font text-3xl font-bold drop-shadow-sm leading-none mr-1 euro-symbol">€</span>
                     <span class="text-white text-lg font-black opacity-30 leading-none mb-1">⇄</span>
                     <div class="icon-container">
                         <img src="512.svg" alt="BGN" class="lion-icon-main">
@@ -228,7 +230,6 @@
             
             const screenWidth = window.innerWidth;
             const screenHeight = window.innerHeight;
-            // Коригиран размер на клетките за елегантен вид
             const cellSize = screenWidth < 768 ? 110 : 150; 
             const cols = Math.ceil(screenWidth / cellSize);
             const rows = Math.ceil(screenHeight / cellSize);
