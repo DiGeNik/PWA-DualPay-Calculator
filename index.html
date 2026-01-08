@@ -85,7 +85,7 @@
             box-shadow: 0 40px 100px -20px rgba(0,0,0,0.15);
         }
         
-        /* ЛОГО ПЛОЧКА - КОМПАКТНА И ПОДРАВНЕНА */
+        /* ЛОГО ПЛОЧКА - ПРЕЦИЗНО ПОДРАВНЯВАНЕ */
         .logo-tile {
             width: 135px;
             height: 85px;
@@ -93,11 +93,11 @@
             border-radius: 2rem;
             display: flex;
             align-items: center;
-            justify-content: flex-end; /* Избутваме всичко надясно към лъва */
+            justify-content: flex-end; 
             box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.5);
             overflow: hidden;
             position: relative;
-            padding-right: 12px; /* Малко отстояние от десния край */
+            padding-right: 2px; /* Намалено отстояние за по-голяма близост до ръба */
         }
 
         .logo-eur { 
@@ -106,7 +106,7 @@
             line-height: 1;
             flex-shrink: 0;
             z-index: 2;
-            margin-right: 2px; /* Приближаване към стрелката */
+            margin-right: 1px;
         }
         
         .logo-arrow { 
@@ -114,7 +114,7 @@
             color: var(--gold); 
             line-height: 1;
             flex-shrink: 0;
-            margin: 0 4px; /* Компактна стрелка */
+            margin: 0 3px; 
             z-index: 2;
         }
         
@@ -123,16 +123,15 @@
             width: auto;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
             flex-shrink: 0;
-            margin-right: -4px;
+            margin-right: -8px; /* Избутваме лъва още по-надясно */
             z-index: 1;
         }
 
-        /* Цвят за временния текст "лв", ако иконата липсва */
         .fallback-lev {
             color: var(--gold);
             font-size: 1.35rem;
             font-weight: 800;
-            margin-left: 2px;
+            margin-right: 10px;
         }
 
         /* ИНПУТ ПОЛЕТА */
