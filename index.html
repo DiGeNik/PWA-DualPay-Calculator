@@ -58,9 +58,9 @@
         }
 
         .bg-symbol-svg {
-            width: 30px;
-            height: 30px;
-            opacity: 0.12;
+            width: 32px;
+            height: 32px;
+            opacity: 0.15; /* Засилена видимост за фона */
             animation: float-animation 20s infinite ease-in-out;
         }
 
@@ -102,12 +102,12 @@
 
         /* Контейнер за иконата в плочката */
         .icon-container {
-            width: 44px; 
-            height: 44px;
+            width: 42px; 
+            height: 42px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-left: -8px; 
+            margin-left: -6px; 
             margin-bottom: -10px; 
         }
 
@@ -138,11 +138,11 @@
                     <span class="text-white text-lg font-black opacity-30 leading-none mb-1">⇄</span>
                     
                     <div class="icon-container">
-                        <!-- Вграден SVG символ на Лева (Златист и Плътен) -->
-                        <svg viewBox="0 0 512 512" class="w-full h-full" fill="#f59e0b">
-                            <path d="M420,420 H320 V140 H280 V420 H180 V420 Q140,420 120,380 T100,300 V100 H160 V300 Q160,340 180,340 H280 V100 H420 V420 Z" />
-                            <rect x="240" y="220" width="120" height="30" rx="5" />
-                            <rect x="240" y="280" width="120" height="30" rx="5" />
+                        <!-- Вграден SVG символ на Лева (Ярко Златист) -->
+                        <svg viewBox="0 0 512 512" class="w-full h-full" style="fill: #f59e0b;">
+                             <path d="M410,410 H310 V130 H270 V410 H170 V410 Q130,410 110,370 T90,290 V90 H150 V290 Q150,330 170,330 H270 V90 H410 V410 Z" />
+                             <rect x="230" y="210" width="120" height="30" rx="5" />
+                             <rect x="230" y="270" width="120" height="30" rx="5" />
                         </svg>
                     </div>
                 </div>
@@ -212,15 +212,15 @@
         const goldColor = "#f59e0b";
         const slateColor = "#94a3b8";
 
-        // Дефиниция на SVG символа на лева за многократна употреба
-        const LION_SVG = `<svg viewBox="0 0 512 512" fill="currentColor"><path d="M420,420 H320 V140 H280 V420 H180 V420 Q140,420 120,380 T100,300 V100 H160 V300 Q160,340 180,340 H280 V100 H420 V420 Z" /><rect x="240" y="220" width="120" height="30" rx="5" /><rect x="240" y="280" width="120" height="30" rx="5" /></svg>`;
+        // Дефиниция на SVG символа за мрежата
+        const LION_SVG_BG = `<svg viewBox="0 0 512 512" fill="currentColor" style="width:100%; height:100%;"><path d="M410,410 H310 V130 H270 V410 H170 V410 Q130,410 110,370 T90,290 V90 H150 V290 Q150,330 170,330 H270 V90 H410 V410 Z" /><rect x="230" y="210" width="120" height="30" rx="5" /><rect x="230" y="270" width="120" height="30" rx="5" /></svg>`;
 
         function initBackground() {
             const bgPattern = document.getElementById('bgPattern');
             if (!bgPattern) return;
             const screenWidth = window.innerWidth;
             const screenHeight = window.innerHeight;
-            const cellSize = screenWidth < 768 ? 100 : 130;
+            const cellSize = screenWidth < 768 ? 90 : 120;
             const cols = Math.ceil(screenWidth / cellSize);
             const rows = Math.ceil(screenHeight / cellSize);
             bgPattern.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
@@ -233,14 +233,13 @@
                     wrapper.className = 'currency-item';
                     
                     if ((r + c) % 2 === 0) {
-                        // Евро в мрежата
-                        wrapper.innerHTML = `<span class="bg-symbol-svg" style="color: ${goldColor}; font-family: Comfortaa; font-size: 24px; font-weight: 900; display: flex; align-items: center; justify-content: center;">€</span>`;
+                        wrapper.innerHTML = `<span class="bg-symbol-svg" style="color: ${goldColor}; font-family: Comfortaa; font-size: 26px; font-weight: 900; display: flex; align-items: center; justify-content: center; opacity: 0.15;">€</span>`;
                     } else {
-                        // Лъв (вграден SVG) в мрежата
                         const lionDiv = document.createElement('div');
                         lionDiv.className = 'bg-symbol-svg';
                         lionDiv.style.color = slateColor;
-                        lionDiv.innerHTML = LION_SVG;
+                        lionDiv.style.opacity = "0.15";
+                        lionDiv.innerHTML = LION_SVG_BG;
                         wrapper.appendChild(lionDiv);
                     }
                     bgPattern.appendChild(wrapper);
@@ -310,14 +309,14 @@
             document.getElementById(id).addEventListener('input', calculate);
         });
 
+        // Манифестът също е актуализиран да не търси външни файлове
         const manifest = {
             "name": "DualPay Калкулатор",
             "short_name": "DualPay",
             "start_url": ".",
             "display": "standalone",
             "background_color": "#f1f5f9",
-            "theme_color": "#2563eb",
-            "icons": [ { "src": "512.svg", "sizes": "any", "type": "image/svg+xml" } ]
+            "theme_color": "#2563eb"
         };
         const manifestBlob = new Blob([JSON.stringify(manifest)], {type: 'application/json'});
         document.getElementById('pwa-manifest').setAttribute('href', URL.createObjectURL(manifestBlob));
