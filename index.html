@@ -84,16 +84,18 @@
             100% { transform: translate(0, 0) rotate(0deg); }
         }
 
+        /* ОБНОВЕН СТЪКЛЕН ЕФЕКТ (Glassmorphism) */
         .app-window {
-            background-color: #dbeafe; 
-            border: 1px solid #bfdbfe;
-            backdrop-filter: blur(20px);
+            background-color: rgba(219, 234, 254, 0.7); /* Полупрозрачно синьо */
+            border: 1px solid rgba(191, 219, 254, 0.8);
+            backdrop-filter: blur(25px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
             z-index: 10;
             position: relative;
         }
         
         .input-field {
-            background-color: #fef9c3 !important; 
+            background-color: rgba(254, 249, 195, 0.9) !important; 
             border: 1px solid #fde047;
             transition: all 0.2s ease;
         }
@@ -103,7 +105,7 @@
         .change-text { color: #059669; } 
         
         .result-box {
-            background-color: white; 
+            background-color: rgba(255, 255, 255, 0.9); 
             border: 2px solid #10b981; 
         }
 
@@ -114,7 +116,7 @@
             margin: 1.5rem 0;
         }
 
-        /* КОНТЕЙНЕР ЗА ИКОНАТА - СВАЛЕНА МАЛКО НАДОЛУ */
+        /* КОНТЕЙНЕР ЗА ИКОНАТА */
         .icon-container {
             width: 68px; 
             height: 68px;
@@ -122,9 +124,9 @@
             align-items: center;
             justify-content: center;
             margin-left: -18px; 
-            margin-bottom: -2px; /* Променено от -4px, за да слезе иконата надолу */
+            margin-bottom: -2px;
             background: transparent !important;
-            transform: translateY(2px); /* Фина корекция надолу */
+            transform: translateY(2px);
         }
 
         .lion-icon-main {
@@ -139,11 +141,17 @@
             margin-bottom: -4px;
         }
 
+        /* НОВО: Преместване на съдържанието в синята плочка нагоре и надясно */
+        .logo-inner-content {
+            transform: translate(6px, -4px); /* Надясно и Нагоре */
+        }
+
         @media screen and (max-width: 768px) {
             input { font-size: 16px !important; }
             .app-window { padding: 1.25rem !important; margin: 0.5rem; border-radius: 3rem; }
             .bg-symbol-img { width: 50px; height: 50px; }
-            .icon-container { width: 58px; height: 58px; margin-left: -14px; transform: translateY(1px); }
+            .icon-container { width: 58px; height: 58px; margin-left: -14px; }
+            .logo-inner-content { transform: translate(4px, -3px); }
         }
     </style>
 </head>
@@ -153,9 +161,10 @@
 
     <div class="max-w-md w-full app-window rounded-[4rem] shadow-[0_35px_70px_-15px_rgba(0,0,0,0.2)] p-10">
         <div class="flex flex-col items-center mb-8">
+            <!-- Синята плочка с логото -->
             <div class="w-24 h-24 bg-blue-600 rounded-[2.5rem] flex items-center justify-center shadow-2xl mb-4 relative overflow-hidden">
                 <div class="absolute inset-0 bg-white opacity-10 transform -skew-x-12"></div>
-                <div class="flex items-end z-10 pb-2"> 
+                <div class="flex items-end z-10 pb-2 logo-inner-content"> 
                     <span class="currency-gold artistic-font text-4xl font-bold drop-shadow-sm leading-none mr-1 euro-symbol">€</span>
                     <span class="text-white text-lg font-black opacity-30 leading-none mb-1">⇄</span>
                     <div class="icon-container">
