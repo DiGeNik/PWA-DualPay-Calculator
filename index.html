@@ -63,7 +63,7 @@
             height: 64px;
             opacity: 0.75;
             display: block;
-            background: transparent !important; /* Гарантира липса на фон */
+            background: transparent !important;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
             animation: float-animation 20s infinite ease-in-out;
         }
@@ -114,7 +114,7 @@
             margin: 1.5rem 0;
         }
 
-        /* КОНТЕЙНЕР ЗА НОВАТА ИКОНА */
+        /* КОНТЕЙНЕР ЗА ИКОНАТА - СВАЛЕНА МАЛКО НАДОЛУ */
         .icon-container {
             width: 68px; 
             height: 68px;
@@ -122,8 +122,9 @@
             align-items: center;
             justify-content: center;
             margin-left: -18px; 
-            margin-bottom: -4px;
+            margin-bottom: -2px; /* Променено от -4px, за да слезе иконата надолу */
             background: transparent !important;
+            transform: translateY(2px); /* Фина корекция надолу */
         }
 
         .lion-icon-main {
@@ -131,7 +132,6 @@
             height: 100%;
             object-fit: contain;
             background: transparent !important;
-            /* Филтърът понякога може да създаде визуален артефакт с бяло, ако SVG-то има скрити слоеве */
             filter: drop-shadow(0 3px 6px rgba(0,0,0,0.12));
         }
 
@@ -143,7 +143,7 @@
             input { font-size: 16px !important; }
             .app-window { padding: 1.25rem !important; margin: 0.5rem; border-radius: 3rem; }
             .bg-symbol-img { width: 50px; height: 50px; }
-            .icon-container { width: 58px; height: 58px; margin-left: -14px; }
+            .icon-container { width: 58px; height: 58px; margin-left: -14px; transform: translateY(1px); }
         }
     </style>
 </head>
