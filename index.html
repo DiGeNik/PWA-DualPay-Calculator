@@ -57,10 +57,10 @@
             user-select: none;
         }
 
-        .bg-symbol-svg {
+        .bg-symbol-img {
             width: 32px;
             height: 32px;
-            opacity: 0.15; /* Засилена видимост за фона */
+            opacity: 0.08;
             animation: float-animation 20s infinite ease-in-out;
         }
 
@@ -100,15 +100,21 @@
             margin: 1.5rem 0;
         }
 
-        /* Контейнер за иконата в плочката */
+        /* Контейнер за иконата в плочката - версията с добро подравняване */
         .icon-container {
-            width: 42px; 
-            height: 42px;
+            width: 46px; 
+            height: 46px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-left: -6px; 
-            margin-bottom: -10px; 
+            margin-left: -10px; 
+            margin-bottom: -12px;
+        }
+
+        .lion-icon-main {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
         }
 
         .euro-symbol {
@@ -138,12 +144,8 @@
                     <span class="text-white text-lg font-black opacity-30 leading-none mb-1">⇄</span>
                     
                     <div class="icon-container">
-                        <!-- Вграден SVG символ на Лева (Ярко Златист) -->
-                        <svg viewBox="0 0 512 512" class="w-full h-full" style="fill: #f59e0b;">
-                             <path d="M410,410 H310 V130 H270 V410 H170 V410 Q130,410 110,370 T90,290 V90 H150 V290 Q150,330 170,330 H270 V90 H410 V410 Z" />
-                             <rect x="230" y="210" width="120" height="30" rx="5" />
-                             <rect x="230" y="270" width="120" height="30" rx="5" />
-                        </svg>
+                        <!-- Използване на външен 512.svg -->
+                        <img src="512.svg" alt="BGN" class="lion-icon-main">
                     </div>
                 </div>
             </div>
@@ -210,10 +212,6 @@
 
     <script>
         const goldColor = "#f59e0b";
-        const slateColor = "#94a3b8";
-
-        // Дефиниция на SVG символа за мрежата
-        const LION_SVG_BG = `<svg viewBox="0 0 512 512" fill="currentColor" style="width:100%; height:100%;"><path d="M410,410 H310 V130 H270 V410 H170 V410 Q130,410 110,370 T90,290 V90 H150 V290 Q150,330 170,330 H270 V90 H410 V410 Z" /><rect x="230" y="210" width="120" height="30" rx="5" /><rect x="230" y="270" width="120" height="30" rx="5" /></svg>`;
 
         function initBackground() {
             const bgPattern = document.getElementById('bgPattern');
@@ -233,14 +231,9 @@
                     wrapper.className = 'currency-item';
                     
                     if ((r + c) % 2 === 0) {
-                        wrapper.innerHTML = `<span class="bg-symbol-svg" style="color: ${goldColor}; font-family: Comfortaa; font-size: 26px; font-weight: 900; display: flex; align-items: center; justify-content: center; opacity: 0.15;">€</span>`;
+                        wrapper.innerHTML = `<span class="bg-symbol-img artistic-font" style="color: ${goldColor}; font-size: 26px; display: flex; align-items: center; justify-content: center;">€</span>`;
                     } else {
-                        const lionDiv = document.createElement('div');
-                        lionDiv.className = 'bg-symbol-svg';
-                        lionDiv.style.color = slateColor;
-                        lionDiv.style.opacity = "0.15";
-                        lionDiv.innerHTML = LION_SVG_BG;
-                        wrapper.appendChild(lionDiv);
+                        wrapper.innerHTML = `<img src="512.svg" class="bg-symbol-img" alt="">`;
                     }
                     bgPattern.appendChild(wrapper);
                 }
@@ -309,14 +302,14 @@
             document.getElementById(id).addEventListener('input', calculate);
         });
 
-        // Манифестът също е актуализиран да не търси външни файлове
         const manifest = {
             "name": "DualPay Калкулатор",
             "short_name": "DualPay",
             "start_url": ".",
             "display": "standalone",
             "background_color": "#f1f5f9",
-            "theme_color": "#2563eb"
+            "theme_color": "#2563eb",
+            "icons": [ { "src": "512.svg", "sizes": "any", "type": "image/svg+xml" } ]
         };
         const manifestBlob = new Blob([JSON.stringify(manifest)], {type: 'application/json'});
         document.getElementById('pwa-manifest').setAttribute('href', URL.createObjectURL(manifestBlob));
