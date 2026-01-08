@@ -50,24 +50,30 @@
             width: 100%; height: 100%;
         }
 
+        /* ПЛАВНА АНИМАЦИЯ - FLOAT, ROTATE, SCALE */
         @keyframes complex-float {
             0% { transform: translate(0, 0) rotate(0deg) scale(1); }
-            50% { transform: translate(10px, -10px) rotate(3deg) scale(1.05); }
+            33% { transform: translate(15px, -15px) rotate(4deg) scale(1.08); }
+            66% { transform: translate(-10px, 10px) rotate(-3deg) scale(0.95); }
             100% { transform: translate(0, 0) rotate(0deg) scale(1); }
         }
 
-        /* Твоята икона като фонов елемент */
+        .bg-custom-icon, .bg-euro-text {
+            animation: complex-float 12s infinite ease-in-out;
+            display: inline-block;
+        }
+
         .bg-custom-icon {
-            width: 40px; 
-            height: 60px; /* Пропорция 512x768 */
-            opacity: 0.08;
+            width: 35px; 
+            height: 52px; /* Пропорция 512x768 */
+            opacity: 0.12;
             object-fit: contain;
-            animation: complex-float 15s infinite ease-in-out;
         }
 
         .bg-euro-text {
-            font-size: 38px; opacity: 0.1; color: var(--gold);
-            animation: complex-float 18s infinite ease-in-out;
+            font-size: 32px; 
+            opacity: 0.12; 
+            color: var(--gold);
         }
 
         /* ГЛАВЕН ПРОЗОРЕЦ */
@@ -80,34 +86,44 @@
             position: relative;
         }
         
-        /* ЛОГО ПЛОЧКА */
+        /* КОМПАКТНА ЛОГО ПЛОЧКА */
         .logo-tile {
-            width: 140px; 
-            height: 120px;
+            width: 110px; 
+            height: 90px;
             background-color: var(--primary-blue);
-            border-radius: 2.5rem;
+            border-radius: 2rem;
             display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 15px 35px -5px rgba(37, 99, 235, 0.3);
+            box-shadow: 0 12px 25px -5px rgba(37, 99, 235, 0.4);
             position: relative;
+            padding: 0 10px;
         }
 
         .logo-inner {
-            display: flex; align-items: center; gap: 8px;
+            display: flex; align-items: center; justify-content: center; gap: 4px;
+            width: 100%;
         }
 
-        /* Твоята външна икона 512.svg */
         .main-custom-icon {
-            width: 52px; 
-            height: 78px; /* Запазена пропорция 512x768 */
+            width: 44px; 
+            height: 66px; 
             object-fit: contain;
-            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+            filter: drop-shadow(0 3px 5px rgba(0,0,0,0.2));
+            flex-shrink: 0;
         }
 
-        .euro-logo { font-size: 44px; color: var(--gold); }
+        .euro-logo { 
+            font-size: 32px; 
+            color: var(--gold); 
+            line-height: 1;
+            margin-right: 2px;
+        }
 
         .transfer-arrow-svg {
-            width: 30px; height: 20px; fill: var(--gold);
-            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.2));
+            width: 20px; 
+            height: 14px; 
+            fill: var(--gold);
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
+            flex-shrink: 0;
         }
 
         /* ИНПУТ ПОЛЕТА */
@@ -140,10 +156,8 @@
                     <svg class="transfer-arrow-svg" viewBox="0 0 24 24">
                         <path d="M22 12c0-.3-.1-.5-.3-.7l-4-4c-.4-.4-1-.4-1.4 0s-.4 1 0 1.4l2.3 2.3H5.4l2.3-2.3c.4-.4.4-1 0-1.4s-1-.4-1.4 0l-4 4c-.2.2-.3.4-.3.7s.1.5.3.7l4 4c.2.2.5.3.7.3s.5-.1.7-.3c.4-.4.4-1 0-1.4L5.4 13h13.2l-2.3 2.3c-.4.4-.4 1 0 1.4.2.2.5.3.7.3s.5-.1.7-.3l4-4c.2-.2.3-.4.3-.7z"/>
                     </svg>
-                    <!-- ВЪНШНА ИКОНА 512.svg -->
                     <img id="mainLogoIcon" class="main-custom-icon" src="512.svg" alt="Lion" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                    <!-- Fallback ако файлът липсва -->
-                    <div style="display:none; color: white; font-size: 10px;">512.svg липсва</div>
+                    <div style="display:none; color: white; font-size: 8px; text-align: center;">512.svg</div>
                 </div>
             </div>
             
@@ -214,18 +228,23 @@
         function initBackground() {
             const bgPattern = document.getElementById('bgPattern');
             if (!bgPattern) return;
-            const cellSize = 150; 
+            const cellSize = 160; 
             const cols = Math.ceil(window.innerWidth / cellSize);
             const rows = Math.ceil(window.innerHeight / cellSize);
             bgPattern.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
             bgPattern.innerHTML = ''; 
+            
             for (let i = 0; i < rows * cols; i++) {
                 const wrapper = document.createElement('div');
                 wrapper.className = 'currency-item';
+                
+                // Добавяме произволно закъснение на анимацията за всеки елемент
+                const delay = (Math.random() * -12).toFixed(2) + 's';
+                
                 if (i % 2 === 0) {
-                    wrapper.innerHTML = `<span class="bg-euro-text artistic-font">€</span>`;
+                    wrapper.innerHTML = `<span class="bg-euro-text artistic-font" style="animation-delay: ${delay}">€</span>`;
                 } else {
-                    wrapper.innerHTML = `<img src="${ICON_PATH}" class="bg-custom-icon" onerror="this.style.opacity='0'">`;
+                    wrapper.innerHTML = `<img src="${ICON_PATH}" class="bg-custom-icon" style="animation-delay: ${delay}" onerror="this.style.opacity='0'">`;
                 }
                 bgPattern.appendChild(wrapper);
             }
