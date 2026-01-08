@@ -57,10 +57,10 @@
         }
 
         .currency-img-bg {
-            width: 40px;
-            height: 40px;
-            opacity: 0.15;
-            filter: grayscale(1) brightness(0.5); /* Прави иконите на фона по-дискретни */
+            width: 42px;
+            height: 42px;
+            opacity: 0.25; /* Увеличена видимост на фона */
+            filter: grayscale(1) contrast(1.2); 
             animation: float-animation 20s infinite ease-in-out;
         }
 
@@ -102,21 +102,21 @@
 
         /* Контейнер за иконата */
         .icon-container {
-            width: 52px; 
-            height: 52px;
+            width: 48px; 
+            height: 48px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-left: -14px; 
-            margin-bottom: -18px; /* Свален още по-надолу */
+            margin-left: -12px; 
+            margin-bottom: -16px; /* Балансирана позиция */
         }
 
         .lion-icon-main {
-            width: 130%; 
-            height: 130%;
+            width: 110%; /* Намален размер за елегантност */
+            height: 110%;
             object-fit: contain;
-            /* Екстремна плътност: много висок контраст и наслагване на сенки */
-            filter: contrast(200%) brightness(50%) drop-shadow(0 0 1px #000) drop-shadow(0 0 0.5px #000);
+            /* По-чиста плътност без засенчване */
+            filter: contrast(150%) brightness(40%);
         }
 
         .euro-symbol {
@@ -138,7 +138,7 @@
             <div class="w-24 h-24 bg-blue-600 rounded-[2.5rem] flex items-center justify-center shadow-2xl mb-4 relative overflow-hidden">
                 <div class="absolute inset-0 bg-white opacity-10 transform -skew-x-12"></div>
                 <div class="flex items-end z-10 pb-2"> 
-                    <!-- Евро символ - намалена дебелина (bold вместо black) -->
+                    <!-- Евро символ - font-bold за по-лек вид -->
                     <span class="lion-gold artistic-font text-4xl font-bold drop-shadow-sm leading-none mr-1 euro-symbol">€</span>
                     
                     <!-- Стрелки -->
@@ -229,18 +229,14 @@
                     const wrapper = document.createElement('div');
                     wrapper.className = 'currency-item';
                     
-                    // Шахматно разпределение
                     if ((r + c) % 2 === 0) {
-                        // Евро
-                        wrapper.innerHTML = `<span style="color: ${goldColor}; font-family: Comfortaa; font-size: 32px; font-weight: 900; opacity: 0.15;">€</span>`;
+                        wrapper.innerHTML = `<span style="color: ${goldColor}; font-family: Comfortaa; font-size: 32px; font-weight: 900; opacity: 0.2;">€</span>`;
                     } else {
-                        // Лъв (BGN)
                         const img = document.createElement('img');
                         img.src = "512.svg";
                         img.className = "currency-img-bg";
-                        // Подсигуряваме визуализацията дори ако има проблем със заглавния файл
                         img.onerror = function() { 
-                            this.parentElement.innerHTML = '<span style="color: #64748b; font-family: Montserrat; font-size: 14px; font-weight: 800; opacity: 0.2;">лв</span>'; 
+                            this.parentElement.innerHTML = '<span style="color: #64748b; font-family: Montserrat; font-size: 14px; font-weight: 800; opacity: 0.25;">лв</span>'; 
                         };
                         wrapper.appendChild(img);
                     }
