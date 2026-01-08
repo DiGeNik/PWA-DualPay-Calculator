@@ -65,7 +65,6 @@
             user-select: none;
         }
 
-        /* УВЕЛИЧЕНА ИКОНА ВЪВ ФОНА */
         .bg-lev-icon { 
             height: 7.5rem; 
             width: auto;
@@ -94,22 +93,27 @@
             border-radius: 2.2rem;
             display: flex; align-items: center; justify-content: center;
             box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.5);
-            padding: 12px;
+            padding: 0; /* Премахваме padding за по-точно центриране */
         }
 
         .logo-inner {
-            display: flex; align-items: center; justify-content: center; gap: 10px;
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            gap: 8px; /* Оптимизирано разстояние */
             color: var(--gold);
+            width: 100%;
         }
 
-        .logo-eur { font-size: 32px; margin-top: 4px; }
-        .logo-arrow { font-size: 28px; font-weight: 900; color: white; }
+        .logo-eur { font-size: 32px; margin-top: 4px; line-height: 1; }
+        .logo-arrow { font-size: 24px; font-weight: 900; color: white; line-height: 1; }
         
-        /* УВЕЛИЧЕНА ИКОНА В ЛОГОТО */
+        /* ЛЪВЪТ В ЛОГОТО - ГОЛЯМ И ЦЕНТРИРАН */
         .logo-lev-icon { 
             height: 85px; 
             width: auto;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+            display: block;
         }
 
         /* ИНПУТ ПОЛЕТА */
@@ -161,7 +165,6 @@
                 <div class="logo-inner artistic-font">
                     <span class="logo-eur">€</span>
                     <span class="logo-arrow">⇄</span>
-                    <!-- Използване на правилната икона -->
                     <img src="lv_icon.svg" class="logo-lev-icon" alt="лв" onerror="this.outerHTML='<span class=\'text-4xl\'>лв</span>'">
                 </div>
             </div>
