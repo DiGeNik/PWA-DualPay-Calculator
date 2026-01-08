@@ -85,10 +85,10 @@
             box-shadow: 0 40px 100px -20px rgba(0,0,0,0.15);
         }
         
-        /* ЛОГО ПЛОЧКА */
+        /* ЛОГО ПЛОЧКА - ОЩЕ ПО-КОМПАКТНА */
         .logo-tile {
-            width: 155px; 
-            height: 90px;
+            width: 135px; /* Намалена ширина за максимален фокус */
+            height: 85px;
             background-color: var(--primary-blue);
             border-radius: 2rem;
             display: flex;
@@ -97,11 +97,11 @@
             box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.5);
             overflow: hidden;
             position: relative;
-            padding: 0 10px;
+            padding: 0 8px;
         }
 
         .logo-eur { 
-            font-size: 32px; 
+            font-size: 30px; 
             color: var(--gold);
             line-height: 1;
             flex-shrink: 0;
@@ -109,27 +109,27 @@
         }
         
         .logo-arrow { 
-            font-size: 28px; 
+            font-size: 24px; 
             color: var(--gold); 
             line-height: 1;
             flex-shrink: 0;
-            margin: 0 10px; 
+            margin: 0 6px; 
             z-index: 2;
         }
         
         .logo-lev-img {
-            height: 80px; 
+            height: 75px; 
             width: auto;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
             flex-shrink: 0;
-            margin-right: -5px;
+            margin-right: -4px;
             z-index: 1;
         }
 
         /* Цвят за временния текст "лв", ако иконата липсва */
         .fallback-lev {
             color: var(--gold);
-            font-size: 1.5rem;
+            font-size: 1.35rem;
             font-weight: 800;
         }
 
@@ -181,7 +181,6 @@
             <div class="logo-tile mb-4">
                 <span class="logo-eur artistic-font">€</span>
                 <span class="logo-arrow">↔</span>
-                <!-- Променен цвят на временния текст (onerror) -->
                 <img src="lv_icon.svg" class="logo-lev-img" alt="лв" onerror="this.outerHTML='<span class=\'fallback-lev\'>лв</span>'">
             </div>
             <h1 class="text-3xl font-black text-slate-800 artistic-font tracking-tight">DualPay</h1>
