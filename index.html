@@ -58,16 +58,16 @@
         }
 
         .currency-img-bg {
-            width: 50px;
-            height: 50px;
-            opacity: 0.1;
-            filter: grayscale(0.5);
+            width: 45px;
+            height: 45px;
+            opacity: 0.12;
+            filter: grayscale(0.3);
             animation: float-animation 20s infinite ease-in-out;
         }
 
         @keyframes float-animation {
             0% { transform: translate(0, 0) rotate(0deg); }
-            50% { transform: translate(15px, -25px) rotate(10deg); }
+            50% { transform: translate(10px, -15px) rotate(5deg); }
             100% { transform: translate(0, 0) rotate(0deg); }
         }
 
@@ -102,25 +102,9 @@
         }
 
         .lion-icon-main {
-            width: 54px;
-            height: 54px;
+            width: 58px;
+            height: 58px;
             object-fit: contain;
-        }
-
-        /* Стил за контейнера на иконата, ако изображението липсва */
-        .img-placeholder {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
-            color: white;
-            background: #f59e0b;
-            border-radius: 1rem;
-            width: 44px;
-            height: 44px;
-            font-size: 10px;
-            text-align: center;
-            line-height: 1;
         }
 
         @media screen and (max-width: 768px) {
@@ -139,16 +123,11 @@
                 <div class="absolute inset-0 bg-white opacity-10 transform -skew-x-12"></div>
                 <div class="flex items-center gap-2 z-10">
                     <!-- Удебелен евро символ в златисто -->
-                    <span class="lion-gold artistic-font text-4xl font-black">€</span>
+                    <span class="lion-gold artistic-font text-4xl font-black drop-shadow-sm">€</span>
                     <span class="text-white text-xl font-black opacity-30">⇄</span>
                     
-                    <!-- Оригиналната икона на лъва като SVG -->
-                    <div id="lionIconContainer">
-                        <img src="912.svg" alt="BGN" class="lion-icon-main" 
-                             onload="this.style.display='block'; document.getElementById('bgnFallback').style.display='none'"
-                             onerror="this.style.display='none'; document.getElementById('bgnFallback').style.display='flex'">
-                        <div id="bgnFallback" class="img-placeholder" style="display: none;">ЛЪВ<br>912</div>
-                    </div>
+                    <!-- Вашата икона 912.svg -->
+                    <img src="912.svg" alt="BGN" class="lion-icon-main">
                 </div>
             </div>
             <h1 class="text-3xl font-bold text-slate-800 artistic-font tracking-tight">DualPay</h1>
@@ -233,13 +212,12 @@
                     
                     if (isBgn) {
                         const img = document.createElement('img');
-                        img.src = "912.svg";
+                        // Добавяме Timestamp за избягване на кеширане при разработка
+                        img.src = "912.svg?v=" + new Date().getTime();
                         img.className = "currency-img-bg";
-                        img.onerror = function() { this.style.opacity = '0'; };
                         wrapper.appendChild(img);
                     } else {
-                        // Удебелен евро символ и за фона
-                        wrapper.innerHTML = `<span style="color: ${goldColor}; font-family: Comfortaa; font-size: 32px; font-weight: 900; opacity: 0.18;">€</span>`;
+                        wrapper.innerHTML = `<span style="color: ${goldColor}; font-family: Comfortaa; font-size: 32px; font-weight: 900; opacity: 0.2;">€</span>`;
                     }
                     bgPattern.appendChild(wrapper);
                 }
