@@ -65,14 +65,14 @@
             user-select: none;
         }
 
-        /* Нови размери за фона съобразени с 500x600px */
+        /* УВЕЛИЧЕН РАЗМЕР ЗА ФОНА (500x600px пропорция) */
         .bg-lev-icon { 
-            height: 5.5rem; /* Увеличен размер за доминантност */
+            height: 6.5rem; /* Още по-внушителен във фона */
             width: auto;
             filter: grayscale(1) brightness(0.2);
         }
         .bg-eur-text { 
-            font-size: 3.5rem; 
+            font-size: 4rem; 
             color: #334155; 
         }
 
@@ -86,26 +86,26 @@
             box-shadow: 0 40px 100px -20px rgba(0,0,0,0.15);
         }
         
-        /* ЛОГО ПЛОЧКА - оптимизирана за по-висока икона */
+        /* ЛОГО ПЛОЧКА - Адаптирана за големия лъв */
         .logo-tile {
-            width: 140px; 
-            height: 110px;
+            width: 160px; 
+            height: 130px;
             background-color: var(--primary-blue);
-            border-radius: 2.2rem;
+            border-radius: 2.5rem;
             display: flex; align-items: center; justify-content: center;
             box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.5);
-            padding: 12px;
+            padding: 15px;
         }
 
         .logo-inner {
-            display: flex; align-items: center; justify-content: center; gap: 10px;
+            display: flex; align-items: center; justify-content: center; gap: 12px;
             color: var(--gold);
         }
 
-        .logo-eur { font-size: 32px; margin-top: 4px; }
-        .logo-arrow { font-size: 28px; font-weight: 900; color: white; }
+        .logo-eur { font-size: 38px; margin-top: 6px; }
+        .logo-arrow { font-size: 32px; font-weight: 900; color: white; }
         .logo-lev-icon { 
-            height: 52px; /* Увеличен за визуален баланс (пропорция 5:6) */
+            height: 72px; /* Значително увеличен размер на лъва в логото */
             width: auto;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
         }
@@ -159,8 +159,8 @@
                 <div class="logo-inner artistic-font">
                     <span class="logo-eur">€</span>
                     <span class="logo-arrow">⇄</span>
-                    <!-- ВЪНШНА ИКОНА (500x600px) -->
-                    <img src="lv_icon.svg" class="logo-lev-icon" alt="лв" onerror="this.outerHTML='<span class=\'text-3xl\'>лв</span>'">
+                    <!-- ВЪНШНА ИКОНА ЛЪВ (500x600px) -->
+                    <img src="lv_icon.svg" class="logo-lev-icon" alt="лв" onerror="this.outerHTML='<span class=\'text-4xl\'>лв</span>'">
                 </div>
             </div>
             <h1 class="text-3xl font-black text-slate-800 artistic-font tracking-tight">DualPay</h1>
@@ -228,7 +228,7 @@
         function initBackground() {
             const bgPattern = document.getElementById('bgPattern');
             if (!bgPattern) return;
-            const cellSize = 160; 
+            const cellSize = 170; 
             const cols = Math.ceil(window.innerWidth / cellSize);
             const rows = Math.ceil(window.innerHeight / cellSize);
             bgPattern.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
@@ -285,7 +285,6 @@
             const paidInEur = paidEur + (paidBgn / RATE);
             
             if (due <= 0 && (paidBgn > 0 || paidEur > 0)) {
-                // Продължи към изчисление
             } else if (due <= 0) {
                 resultBox.classList.add('hidden');
                 resultBox.classList.remove('scale-100', 'opacity-100');
