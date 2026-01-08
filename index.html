@@ -6,11 +6,14 @@
     <title>DualPay - Калкулатор за ресто</title>
     
     <!-- PWA Meta Tags -->
-    <meta name="theme-color" content="#dbeafe">
+    <meta name="theme-color" content="#2563eb">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="DualPay">
     
+    <!-- Dynamic Manifest for Installation -->
+    <link id="manifest-link" rel="manifest">
+
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,7 +41,7 @@
             font-weight: 700;
         }
 
-        /* ДИНАМИЧЕН ФОН */
+        /* DYNAMIC BACKGROUND */
         .bg-pattern {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
@@ -75,7 +78,7 @@
             color: #334155; 
         }
 
-        /* ГЛАВЕН ПРОЗОРЕЦ */
+        /* MAIN APP WINDOW */
         .app-window {
             background-color: rgba(255, 255, 255, 0.4); 
             border: 1px solid rgba(255, 255, 255, 0.6);
@@ -85,7 +88,7 @@
             box-shadow: 0 40px 100px -20px rgba(0,0,0,0.15);
         }
         
-        /* ЛОГО ПЛОЧКА */
+        /* LOGO TILE - Final Tweaks Applied */
         .logo-tile {
             width: 115px; 
             height: 85px;
@@ -114,7 +117,7 @@
             color: var(--gold); 
             line-height: 1;
             flex-shrink: 0;
-            margin-right: -20px; /* ВЪРНАТА НАЛЯВО С 1ММ (от -24px на -20px) */
+            margin-right: -20px; /* Moved 1mm left from previous -24px */
             z-index: 3; 
             position: relative;
         }
@@ -124,7 +127,7 @@
             width: auto;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
             flex-shrink: 0;
-            margin-right: -18px; 
+            margin-right: -18px; /* Pulled 2mm right */
             z-index: 1;
         }
 
@@ -135,7 +138,7 @@
             margin-left: 15px;
         }
 
-        /* ИНПУТ ПОЛЕТА */
+        /* INPUT STYLING */
         .input-field {
             background-color: #fef9c3 !important;
             border: 2px solid #fde047;
@@ -174,11 +177,12 @@
 </head>
 <body class="min-h-screen flex items-center justify-center p-4">
 
+    <!-- Animated Background Container -->
     <div class="bg-pattern" id="bgPattern"></div>
 
     <div class="max-w-md w-full app-window p-8 sm:p-12 relative overflow-hidden">
         
-        <!-- Лого секция -->
+        <!-- Header / Logo Section -->
         <div class="flex flex-col items-center mb-10">
             <div class="logo-tile mb-4">
                 <span class="logo-eur artistic-font">€</span>
@@ -190,7 +194,7 @@
         </div>
 
         <div class="space-y-5">
-            <!-- СУМА ЗА ПЛАЩАНЕ -->
+            <!-- AMOUNT DUE -->
             <div>
                 <label class="block text-[10px] font-black text-slate-500 mb-2 uppercase tracking-widest pl-2">Сума за плащане</label>
                 <div class="relative">
@@ -204,7 +208,7 @@
 
             <div class="separator-bar"></div>
 
-            <!-- ПЛАТЕНО -->
+            <!-- PAID AMOUNTS -->
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <label class="block text-[10px] font-black text-slate-500 uppercase mb-2 tracking-widest pl-2">Платено лв</label>
@@ -216,7 +220,7 @@
                 </div>
             </div>
 
-            <!-- ВАЛУТА ЗА РЕСТО -->
+            <!-- CHANGE CURRENCY SELECTOR -->
             <div class="pt-2">
                 <div class="segmented-control flex">
                     <button onclick="setChangeCurrency('EUR')" id="btnEur" class="segment-btn flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest segment-active">Върни в Евро (€)</button>
@@ -224,7 +228,7 @@
                 </div>
             </div>
 
-            <!-- РЕЗУЛТАТ -->
+            <!-- RESULT DISPLAY -->
             <div id="resultBox" class="mt-6 p-8 rounded-[2.5rem] hidden border-2 border-emerald-500 shadow-2xl bg-white/90 transform transition-all duration-500 scale-95 opacity-0">
                 <div class="text-center">
                     <span class="text-slate-400 text-[9px] font-black uppercase tracking-[0.4em]">Ресто за връщане</span>
@@ -233,6 +237,7 @@
                 </div>
             </div>
 
+            <!-- ERROR DISPLAY -->
             <div id="errorBox" class="hidden p-5 bg-red-500 text-white rounded-2xl text-[10px] text-center font-black uppercase tracking-[0.2em] shadow-lg animate-pulse">
                 Недостатъчна сума
             </div>
@@ -245,8 +250,33 @@
     </div>
 
     <script>
-        const LV_ICON_PATH = 'lv_icon.svg';
+        // PWA MANIFEST INITIALIZATION
+        const manifest = {
+            "name": "DualPay Change Calculator",
+            "short_name": "DualPay",
+            "start_url": ".",
+            "display": "standalone",
+            "background_color": "#dbeafe",
+            "theme_color": "#2563eb",
+            "description": "Smart currency change calculator for BGN and EUR",
+            "icons": [
+                {
+                    "src": "https://raw.githubusercontent.com/DiNikolova/assets/main/icon-192.png",
+                    "sizes": "192x192",
+                    "type": "image/png",
+                    "purpose": "any maskable"
+                }
+            ]
+        };
+        const blob = new Blob([JSON.stringify(manifest)], {type: 'application/json'});
+        const manifestURL = URL.createObjectURL(blob);
+        document.querySelector('#manifest-link').setAttribute('href', manifestURL);
 
+        const RATE = 1.95583;
+        const LV_ICON_PATH = 'lv_icon.svg';
+        let targetChangeCurrency = 'EUR';
+
+        // Dynamic Background Logic
         function initBackground() {
             const bgPattern = document.getElementById('bgPattern');
             if (!bgPattern) return;
@@ -276,20 +306,21 @@
         window.addEventListener('resize', initBackground);
         window.onload = initBackground;
 
-        const RATE = 1.95583;
-        let targetChangeCurrency = 'EUR';
-
         function setChangeCurrency(curr) {
             targetChangeCurrency = curr;
             const btnEur = document.getElementById('btnEur');
             const btnBgn = document.getElementById('btnBgn');
             
             if (curr === 'EUR') {
-                btnEur.className = "segment-btn flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest segment-active";
-                btnBgn.className = "segment-btn flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-500";
+                btnEur.classList.add('segment-active');
+                btnEur.classList.remove('text-slate-500');
+                btnBgn.classList.remove('segment-active');
+                btnBgn.classList.add('text-slate-500');
             } else {
-                btnBgn.className = "segment-btn flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest segment-active";
-                btnEur.className = "segment-btn flex-1 py-3 rounded-xl text-[10px] font-black uppercase tracking-widest text-slate-500";
+                btnBgn.classList.add('segment-active');
+                btnBgn.classList.remove('text-slate-500');
+                btnEur.classList.remove('segment-active');
+                btnEur.classList.add('text-slate-500');
             }
             calculate();
         }
@@ -306,8 +337,9 @@
             const dueInEur = dueCurr === 'EUR' ? due : due / RATE;
             const paidInEur = paidEur + (paidBgn / RATE);
             
+            // Handle display logic
             if (due <= 0 && (paidBgn > 0 || paidEur > 0)) {
-                // Продължи
+                // Calculation allowed for 0 due but paid amounts
             } else if (due <= 0) {
                 resultBox.classList.add('hidden');
                 resultBox.classList.remove('scale-100', 'opacity-100');
@@ -325,6 +357,7 @@
             errorBox.classList.add('hidden');
             resultBox.classList.remove('hidden');
             
+            // Small timeout to trigger CSS transition
             setTimeout(() => {
                 resultBox.classList.add('scale-100', 'opacity-100');
                 resultBox.classList.remove('scale-95', 'opacity-0');
@@ -341,6 +374,7 @@
             }
         }
 
+        // Listeners for all inputs
         ['dueAmount', 'dueCurrency', 'payBgn', 'payEur'].forEach(id => {
             document.getElementById(id).addEventListener('input', calculate);
         });
