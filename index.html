@@ -99,21 +99,25 @@
             margin: 1.5rem 0;
         }
 
-        /* Прецизиран контейнер за иконата */
+        /* Контейнер за иконата с фини настройки */
         .icon-container {
-            width: 42px; 
-            height: 42px;
+            width: 50px; /* Увеличен размер на контейнера */
+            height: 50px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-left: -10px; /* Още по-наляво */
-            margin-bottom: -6px; /* Още по-надолу */
+            margin-left: -12px; /* Леко засилено застъпване за баланс */
+            margin-bottom: -6px; /* Запазена ниска позиция */
         }
 
         .lion-icon-main {
-            width: 100%;
-            height: 100%;
+            width: 115%; /* Увеличен мащаб на лъва вътре в контейнера */
+            height: 115%;
             object-fit: contain;
+        }
+
+        .euro-symbol {
+            margin-bottom: -4px; /* Сваляме еврото надолу */
         }
 
         @media screen and (max-width: 768px) {
@@ -131,8 +135,8 @@
             <div class="w-24 h-24 bg-blue-600 rounded-[2.5rem] flex items-center justify-center shadow-2xl mb-4 relative overflow-hidden">
                 <div class="absolute inset-0 bg-white opacity-10 transform -skew-x-12"></div>
                 <div class="flex items-end z-10 pb-2"> 
-                    <!-- Евро символ -->
-                    <span class="lion-gold artistic-font text-4xl font-black drop-shadow-sm leading-none mr-1">€</span>
+                    <!-- Евро символ - свален с маржин -->
+                    <span class="lion-gold artistic-font text-4xl font-black drop-shadow-sm leading-none mr-1 euro-symbol">€</span>
                     
                     <!-- Стрелки -->
                     <span class="text-white text-lg font-black opacity-30 leading-none mb-1">⇄</span>
