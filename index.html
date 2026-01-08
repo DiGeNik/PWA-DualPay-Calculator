@@ -85,18 +85,19 @@
             box-shadow: 0 40px 100px -20px rgba(0,0,0,0.15);
         }
         
-        /* НОВО СИМЕТРИЧНО ЛОГО */
+        /* ЛОГО ПЛОЧКА - КОРИГИРАНО ПОДРАВНЯВАНЕ НАДЯСНО */
         .logo-tile {
-            width: 180px; /* Увеличена ширина за симетрия */
+            width: 190px; 
             height: 100px;
             background-color: var(--primary-blue);
             border-radius: 2rem;
             display: flex;
             align-items: center;
-            justify-content: space-evenly; /* Равномерно разпределение */
+            justify-content: flex-start; /* Започваме отляво */
             box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.5);
-            padding: 0 10px;
+            padding-left: 24px; /* Фиксирано разстояние за еврото */
             overflow: hidden;
+            position: relative;
         }
 
         .logo-eur { 
@@ -104,6 +105,7 @@
             color: var(--gold);
             line-height: 1;
             flex-shrink: 0;
+            z-index: 2;
         }
         
         .logo-arrow { 
@@ -113,14 +115,18 @@
             line-height: 1;
             flex-shrink: 0;
             opacity: 0.9;
+            margin-left: 25px; /* Значително изместване на стрелката надясно */
+            z-index: 2;
         }
         
         .logo-lev-img {
-            height: 90px; /* Оптимален размер за симетрия */
+            height: 90px; 
             width: auto;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
             flex-shrink: 0;
-            margin-right: -10px; /* Компенсираме само част от десния padding на файла */
+            margin-left: 10px; /* Изместване на лъва надясно спрямо стрелката */
+            margin-right: -15px; /* Компенсация на празното пространство вдясно */
+            z-index: 1;
         }
 
         /* ИНПУТ ПОЛЕТА */
@@ -171,7 +177,7 @@
             <div class="logo-tile mb-4">
                 <span class="logo-eur artistic-font">€</span>
                 <span class="logo-arrow">⇄</span>
-                <img src="lv_icon.svg" class="logo-lev-img" alt="лв" onerror="this.outerHTML='<span class=\'text-white text-3xl font-bold\'>лв</span>'">
+                <img src="lv_icon.svg" class="logo-lev-img" alt="лв" onerror="this.outerHTML='<span class=\'text-white text-3xl font-bold ml-4\'>лв</span>'">
             </div>
             <h1 class="text-3xl font-black text-slate-800 artistic-font tracking-tight">DualPay</h1>
             <p class="text-slate-500 text-[10px] font-bold uppercase tracking-[0.3em]">Smart Cash Control</p>
