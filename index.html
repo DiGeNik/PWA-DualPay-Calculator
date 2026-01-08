@@ -38,7 +38,7 @@
             font-weight: 700;
         }
 
-        /* ДИНАМИЧЕН ФОН - ШАХМАТНА МРЕЖА */
+        /* ДИНАМИЧЕН ФОН */
         .bg-pattern {
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
@@ -65,9 +65,8 @@
             user-select: none;
         }
 
-        /* УВЕЛИЧЕН РАЗМЕР ЗА ФОНА (500x600px пропорция) */
         .bg-lev-icon { 
-            height: 6.5rem; /* Още по-внушителен във фона */
+            height: 6.5rem; 
             width: auto;
             filter: grayscale(1) brightness(0.2);
         }
@@ -86,26 +85,28 @@
             box-shadow: 0 40px 100px -20px rgba(0,0,0,0.15);
         }
         
-        /* ЛОГО ПЛОЧКА - Адаптирана за големия лъв */
+        /* ЛОГО ПЛОЧКА - ВРЪЩАНЕ НА ОРИГИНАЛНИЯ РАЗМЕР */
         .logo-tile {
-            width: 160px; 
-            height: 130px;
+            width: 140px; 
+            height: 110px;
             background-color: var(--primary-blue);
-            border-radius: 2.5rem;
+            border-radius: 2.2rem;
             display: flex; align-items: center; justify-content: center;
             box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.5);
-            padding: 15px;
+            padding: 12px;
         }
 
         .logo-inner {
-            display: flex; align-items: center; justify-content: center; gap: 12px;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
             color: var(--gold);
         }
 
-        .logo-eur { font-size: 38px; margin-top: 6px; }
-        .logo-arrow { font-size: 32px; font-weight: 900; color: white; }
+        .logo-eur { font-size: 32px; margin-top: 4px; }
+        .logo-arrow { font-size: 28px; font-weight: 900; color: white; }
+        
+        /* ЛЪВЪТ В ЛОГОТО - ОПТИМИЗИРАН РАЗМЕР */
         .logo-lev-icon { 
-            height: 72px; /* Значително увеличен размер на лъва в логото */
+            height: 68px; /* Увеличен, но съобразен с плочката */
             width: auto;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
         }
@@ -159,7 +160,7 @@
                 <div class="logo-inner artistic-font">
                     <span class="logo-eur">€</span>
                     <span class="logo-arrow">⇄</span>
-                    <!-- ВЪНШНА ИКОНА ЛЪВ (500x600px) -->
+                    <!-- ВЪНШНА ИКОНА ЛЪВ -->
                     <img src="lv_icon.svg" class="logo-lev-icon" alt="лв" onerror="this.outerHTML='<span class=\'text-4xl\'>лв</span>'">
                 </div>
             </div>
@@ -228,7 +229,7 @@
         function initBackground() {
             const bgPattern = document.getElementById('bgPattern');
             if (!bgPattern) return;
-            const cellSize = 170; 
+            const cellSize = 180; 
             const cols = Math.ceil(window.innerWidth / cellSize);
             const rows = Math.ceil(window.innerHeight / cellSize);
             bgPattern.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
