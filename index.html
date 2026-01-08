@@ -142,9 +142,9 @@
                     <span class="lion-gold artistic-font text-4xl font-black">€</span>
                     <span class="text-white text-xl font-black opacity-30">⇄</span>
                     
-                    <!-- Оригиналната икона на лъва с Fallback механизъм -->
+                    <!-- Оригиналната икона на лъва като SVG -->
                     <div id="lionIconContainer">
-                        <img src="912.png" alt="BGN" class="lion-icon-main" 
+                        <img src="912.svg" alt="BGN" class="lion-icon-main" 
                              onload="this.style.display='block'; document.getElementById('bgnFallback').style.display='none'"
                              onerror="this.style.display='none'; document.getElementById('bgnFallback').style.display='flex'">
                         <div id="bgnFallback" class="img-placeholder" style="display: none;">ЛЪВ<br>912</div>
@@ -233,7 +233,7 @@
                     
                     if (isBgn) {
                         const img = document.createElement('img');
-                        img.src = "912.png";
+                        img.src = "912.svg";
                         img.className = "currency-img-bg";
                         img.onerror = function() { this.style.opacity = '0'; };
                         wrapper.appendChild(img);
@@ -308,11 +308,10 @@
             "display": "standalone",
             "background_color": "#f1f5f9",
             "theme_color": "#2563eb",
-            "icons": [ { "src": "92.png", "sizes": "512x512", "type": "image/png" } ]
+            "icons": [ { "src": "92.svg", "sizes": "any", "type": "image/svg+xml" } ]
         };
         const manifestBlob = new Blob([JSON.stringify(manifest)], {type: 'application/json'});
         document.getElementById('pwa-manifest').setAttribute('href', URL.createObjectURL(manifestBlob));
     </script>
 </body>
 </html>
-
