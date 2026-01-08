@@ -57,12 +57,22 @@
             user-select: none;
         }
 
+        /* Подобрена видимост на символите в мрежата */
         .bg-symbol-img {
             width: 32px;
             height: 32px;
-            opacity: 0.18; /* Още по-засилена видимост */
+            opacity: 0.25; /* Значително по-висока прозрачност за по-добра видимост */
+            display: block;
             animation: float-animation 20s infinite ease-in-out;
-            /* Премахнат grayscale филтър, за да се вижда златният цвят */
+        }
+
+        .bg-euro-text {
+            font-size: 26px;
+            opacity: 0.25;
+            animation: float-animation 20s infinite ease-in-out;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         @keyframes float-animation {
@@ -101,7 +111,6 @@
             margin: 1.5rem 0;
         }
 
-        /* Контейнер за иконата в плочката */
         .icon-container {
             width: 46px; 
             height: 46px;
@@ -134,18 +143,12 @@
 
     <div class="max-w-md w-full app-window rounded-[4rem] shadow-[0_35px_70px_-15px_rgba(0,0,0,0.2)] p-10">
         <div class="flex flex-col items-center mb-8">
-            <!-- Плочка с лого -->
             <div class="w-24 h-24 bg-blue-600 rounded-[2.5rem] flex items-center justify-center shadow-2xl mb-4 relative overflow-hidden">
                 <div class="absolute inset-0 bg-white opacity-10 transform -skew-x-12"></div>
                 <div class="flex items-end z-10 pb-2"> 
-                    <!-- Евро символ -->
                     <span class="currency-gold artistic-font text-4xl font-bold drop-shadow-sm leading-none mr-1 euro-symbol">€</span>
-                    
-                    <!-- Стрелки -->
                     <span class="text-white text-lg font-black opacity-30 leading-none mb-1">⇄</span>
-                    
                     <div class="icon-container">
-                        <!-- Лъвът с оригиналния си златист цвят от файла 512.svg -->
                         <img src="512.svg" alt="BGN" class="lion-icon-main">
                     </div>
                 </div>
@@ -155,7 +158,6 @@
         </div>
 
         <div class="space-y-5">
-            <!-- Полета за вход -->
             <div>
                 <label class="block text-[10px] font-bold text-slate-500 mb-2 uppercase tracking-widest pl-1">Сума за плащане</label>
                 <div class="relative">
@@ -217,9 +219,10 @@
         function initBackground() {
             const bgPattern = document.getElementById('bgPattern');
             if (!bgPattern) return;
+            
             const screenWidth = window.innerWidth;
             const screenHeight = window.innerHeight;
-            const cellSize = screenWidth < 768 ? 85 : 110; 
+            const cellSize = screenWidth < 768 ? 90 : 115; 
             const cols = Math.ceil(screenWidth / cellSize);
             const rows = Math.ceil(screenHeight / cellSize);
             
@@ -232,11 +235,10 @@
                     wrapper.className = 'currency-item';
                     
                     if ((r + c) % 2 === 0) {
-                        wrapper.innerHTML = `<span class="bg-symbol-img artistic-font" style="color: ${goldColor}; font-size: 24px; display: flex; align-items: center; justify-content: center; opacity: 0.15;">€</span>`;
+                        wrapper.innerHTML = `<span class="bg-euro-text artistic-font" style="color: ${goldColor};">€</span>`;
                     } else {
-                        // Използваме директен img таг без филтри
-                        const img = document.createElement('img');
-                        img.src = `512.svg?t=${new Date().getTime()}`; // Параметър против кеширане
+                        const img = new Image();
+                        img.src = `512.svg`; 
                         img.className = 'bg-symbol-img';
                         wrapper.appendChild(img);
                     }
@@ -246,7 +248,8 @@
         }
 
         window.addEventListener('resize', initBackground);
-        window.addEventListener('load', initBackground);
+        // Изчакваме пълното зареждане на всички елементи, включително иконата
+        window.onload = initBackground;
 
         const RATE = 1.95583;
         let targetChangeCurrency = 'EUR';
