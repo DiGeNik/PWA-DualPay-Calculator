@@ -85,48 +85,42 @@
             box-shadow: 0 40px 100px -20px rgba(0,0,0,0.15);
         }
         
-        /* ЛОГО ПЛОЧКА - ВЪРНАТА ВЕРСИЯ С ЛЪВ */
+        /* НОВО СИМЕТРИЧНО ЛОГО */
         .logo-tile {
-            width: 140px; 
-            height: 110px;
+            width: 180px; /* Увеличена ширина за симетрия */
+            height: 100px;
             background-color: var(--primary-blue);
-            border-radius: 2.2rem;
+            border-radius: 2rem;
             display: flex;
             align-items: center;
-            justify-content: center;
+            justify-content: space-evenly; /* Равномерно разпределение */
             box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.5);
+            padding: 0 10px;
             overflow: hidden;
         }
 
-        .logo-inner {
-            display: flex;
-            align-items: center;
-            /* Използваме леко негативно разстояние, за да компенсираме празното в иконата */
-            margin-right: -15px; 
-        }
-
         .logo-eur { 
-            font-size: 32px; 
+            font-size: 36px; 
             color: var(--gold);
             line-height: 1;
-            margin-top: 4px;
+            flex-shrink: 0;
         }
         
         .logo-arrow { 
-            font-size: 20px; 
+            font-size: 26px; 
             font-weight: 900; 
             color: white; 
             line-height: 1;
-            margin: 0 2px;
+            flex-shrink: 0;
+            opacity: 0.9;
         }
         
         .logo-lev-img {
-            height: 105px; /* Увеличена височина, за да компенсира празното пространство */
+            height: 90px; /* Оптимален размер за симетрия */
             width: auto;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
-            /* Плътно прилепяне чрез негативен маржин */
-            margin-left: -15px; 
-            display: block;
+            flex-shrink: 0;
+            margin-right: -10px; /* Компенсираме само част от десния padding на файла */
         }
 
         /* ИНПУТ ПОЛЕТА */
@@ -175,11 +169,9 @@
         <!-- Лого секция -->
         <div class="flex flex-col items-center mb-10">
             <div class="logo-tile mb-4">
-                <div class="logo-inner artistic-font">
-                    <span class="logo-eur">€</span>
-                    <span class="logo-arrow">⇄</span>
-                    <img src="lv_icon.svg" class="logo-lev-img" alt="лв" onerror="this.outerHTML='<span class=\'text-white text-3xl\'>лв</span>'">
-                </div>
+                <span class="logo-eur artistic-font">€</span>
+                <span class="logo-arrow">⇄</span>
+                <img src="lv_icon.svg" class="logo-lev-img" alt="лв" onerror="this.outerHTML='<span class=\'text-white text-3xl font-bold\'>лв</span>'">
             </div>
             <h1 class="text-3xl font-black text-slate-800 artistic-font tracking-tight">DualPay</h1>
             <p class="text-slate-500 text-[10px] font-bold uppercase tracking-[0.3em]">Smart Cash Control</p>
@@ -303,6 +295,7 @@
             const paidInEur = paidEur + (paidBgn / RATE);
             
             if (due <= 0 && (paidBgn > 0 || paidEur > 0)) {
+                // Do nothing
             } else if (due <= 0) {
                 resultBox.classList.add('hidden');
                 resultBox.classList.remove('scale-100', 'opacity-100');
