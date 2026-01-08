@@ -85,7 +85,7 @@
             box-shadow: 0 40px 100px -20px rgba(0,0,0,0.15);
         }
         
-        /* ЛОГО ПЛОЧКА - ОРИГИНАЛЕН РАЗМЕР */
+        /* ЛОГО ПЛОЧКА */
         .logo-tile {
             width: 140px; 
             height: 110px;
@@ -105,24 +105,23 @@
             justify-content: center; 
             color: var(--gold);
             width: 100%;
-            position: relative;
         }
 
-        /* КОРИГИРАНО ПОЗИЦИОНИРАНЕ */
+        /* ПРЕЦИЗНО ПРЕМЕСТВАНЕ НА ЕВРОТО И СТРЕЛКАТА */
         .logo-eur { 
             font-size: 32px; 
             margin-top: 4px; 
             line-height: 1; 
-            transform: translateX(12px); /* Преместване надясно */
+            transform: translateX(14px); /* Преместване надясно, за да влезе в плочката */
         }
         
         .logo-arrow { 
-            font-size: 22px; 
+            font-size: 20px; 
             font-weight: 900; 
             color: white; 
             line-height: 1; 
-            margin: 0 6px;
-            transform: translateX(12px); /* Преместване надясно */
+            margin: 0 4px;
+            transform: translateX(14px); /* Преместване надясно, за да запълни дупката */
         }
         
         .logo-lev-icon { 
@@ -131,6 +130,7 @@
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
             display: block;
             flex-shrink: 0;
+            /* Лъвът остава неподвижен */
         }
 
         /* ИНПУТ ПОЛЕТА */
