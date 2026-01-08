@@ -57,20 +57,20 @@
             user-select: none;
         }
 
-        /* ПОДСИЛВАНЕ НА ЛЪВА (SVG иконата) */
+        /* МАКСИМАЛНО ПОДСИЛВАНЕ НА ЛЪВА */
         .bg-symbol-img {
-            width: 34px;
-            height: 34px;
-            opacity: 0.5; /* Значително по-висока плътност за лъва */
+            width: 42px; /* По-голям размер за повече присъствие */
+            height: 42px;
+            opacity: 0.8; /* Почти плътен, за да не е блед */
             display: block;
-            filter: saturate(1.8) brightness(1.1); /* Подсилване на златистия цвят */
+            filter: saturate(2) brightness(1.1) drop-shadow(0 0 1px rgba(180, 120, 0, 0.5));
             animation: float-animation 20s infinite ease-in-out;
         }
 
-        /* ЕВРОТО (Текст) */
+        /* ЕВРОТО В МРЕЖАТА - остава блед фон */
         .bg-euro-text {
             font-size: 28px;
-            opacity: 0.25; /* Запазваме го по-бледо, за да не доминира над лъва */
+            opacity: 0.15; 
             animation: float-animation 20s infinite ease-in-out;
             display: flex;
             align-items: center;
@@ -114,20 +114,20 @@
         }
 
         .icon-container {
-            width: 48px; 
-            height: 48px;
+            width: 52px; 
+            height: 52px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-left: -12px; 
-            margin-bottom: -10px;
+            margin-left: -14px; 
+            margin-bottom: -8px;
         }
 
         .lion-icon-main {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            filter: saturate(1.5) drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+            filter: saturate(1.8) drop-shadow(0 2px 5px rgba(0,0,0,0.15));
         }
 
         .euro-symbol {
@@ -225,7 +225,7 @@
             
             const screenWidth = window.innerWidth;
             const screenHeight = window.innerHeight;
-            const cellSize = screenWidth < 768 ? 90 : 120; 
+            const cellSize = screenWidth < 768 ? 95 : 130; 
             const cols = Math.ceil(screenWidth / cellSize);
             const rows = Math.ceil(screenHeight / cellSize);
             
