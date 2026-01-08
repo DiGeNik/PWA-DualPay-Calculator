@@ -57,20 +57,21 @@
             user-select: none;
         }
 
-        /* РАЗМЕР НА ЛЪВА В МРЕЖАТА */
+        /* ГОЛЯМ ЛЪВ В МРЕЖАТА */
         .bg-symbol-img {
-            width: 48px; 
-            height: 48px;
-            opacity: 0.55;
+            width: 64px; 
+            height: 64px;
+            opacity: 0.75;
             display: block;
-            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.08));
+            background: transparent !important; /* Гарантира липса на фон */
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.05));
             animation: float-animation 20s infinite ease-in-out;
         }
 
-        /* ЕВРОТО В МРЕЖАТА - НАМАЛЕНО */
+        /* ЕВРОТО В МРЕЖАТА */
         .bg-euro-text {
-            font-size: 26px; /* Намалено от 32px */
-            opacity: 0.12; 
+            font-size: 38px;
+            opacity: 0.15; 
             animation: float-animation 20s infinite ease-in-out;
             display: flex;
             align-items: center;
@@ -79,7 +80,7 @@
 
         @keyframes float-animation {
             0% { transform: translate(0, 0) rotate(0deg); }
-            50% { transform: translate(8px, -12px) rotate(4deg); }
+            50% { transform: translate(12px, -18px) rotate(6deg); }
             100% { transform: translate(0, 0) rotate(0deg); }
         }
 
@@ -113,34 +114,36 @@
             margin: 1.5rem 0;
         }
 
-        /* ЛОГО В ГЛАВНАТА ПЛОЧКА - НАМАЛЕНО ЕВРО */
+        /* КОНТЕЙНЕР ЗА НОВАТА ИКОНА */
         .icon-container {
-            width: 56px; 
-            height: 56px;
+            width: 68px; 
+            height: 68px;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-left: -12px; 
-            margin-bottom: -5px;
+            margin-left: -18px; 
+            margin-bottom: -4px;
+            background: transparent !important;
         }
 
         .lion-icon-main {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+            background: transparent !important;
+            /* Филтърът понякога може да създаде визуален артефакт с бяло, ако SVG-то има скрити слоеве */
+            filter: drop-shadow(0 3px 6px rgba(0,0,0,0.12));
         }
 
         .euro-symbol {
-            margin-bottom: -2px; /* Лека корекция на височината */
+            margin-bottom: -4px;
         }
 
         @media screen and (max-width: 768px) {
             input { font-size: 16px !important; }
             .app-window { padding: 1.25rem !important; margin: 0.5rem; border-radius: 3rem; }
-            .bg-symbol-img { width: 40px; height: 40px; }
-            .icon-container { width: 50px; height: 50px; margin-left: -10px; }
-            .bg-euro-text { font-size: 22px; }
+            .bg-symbol-img { width: 50px; height: 50px; }
+            .icon-container { width: 58px; height: 58px; margin-left: -14px; }
         }
     </style>
 </head>
@@ -153,8 +156,7 @@
             <div class="w-24 h-24 bg-blue-600 rounded-[2.5rem] flex items-center justify-center shadow-2xl mb-4 relative overflow-hidden">
                 <div class="absolute inset-0 bg-white opacity-10 transform -skew-x-12"></div>
                 <div class="flex items-end z-10 pb-2"> 
-                    <!-- Намален размер на Евро символа тук: text-3xl вместо text-4xl -->
-                    <span class="currency-gold artistic-font text-3xl font-bold drop-shadow-sm leading-none mr-1 euro-symbol">€</span>
+                    <span class="currency-gold artistic-font text-4xl font-bold drop-shadow-sm leading-none mr-1 euro-symbol">€</span>
                     <span class="text-white text-lg font-black opacity-30 leading-none mb-1">⇄</span>
                     <div class="icon-container">
                         <img src="512.svg" alt="BGN" class="lion-icon-main">
@@ -230,7 +232,7 @@
             
             const screenWidth = window.innerWidth;
             const screenHeight = window.innerHeight;
-            const cellSize = screenWidth < 768 ? 110 : 150; 
+            const cellSize = screenWidth < 768 ? 120 : 160; 
             const cols = Math.ceil(screenWidth / cellSize);
             const rows = Math.ceil(screenHeight / cellSize);
             
