@@ -36,11 +36,11 @@
 
         .artistic-font { font-family: 'Comfortaa', cursive; }
 
-        /* Динамичен артистичен фон с по-плътна мрежа */
+        /* Динамичен артистичен фон с пълна липса на шахматен ред */
         .bg-pattern {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: -1; display: grid;
-            grid-template-columns: repeat(8, 1fr); /* Увеличени колони за по-малко разстояние */
+            grid-template-columns: repeat(8, 1fr);
             grid-template-rows: repeat(auto-fill, 1fr);
         }
 
@@ -67,13 +67,13 @@
         }
 
         .bg-lion-img {
-            width: 85px; /* Леко коригиран размер */
+            width: 85px;
             height: auto;
             filter: grayscale(100%) brightness(0.6);
         }
 
         .bg-euro-text {
-            font-size: 2.2rem; /* Намален размер на еврото за по-добър баланс */
+            font-size: 2.2rem;
             font-weight: 800;
         }
 
@@ -106,7 +106,13 @@
             height: 100%;
         }
 
-        .logo-eur { color: var(--gold); font-size: 1.8rem; font-weight: bold; }
+        /* Еврото е свалено с 1мм надолу за по-добър център */
+        .logo-eur { 
+            color: var(--gold); 
+            font-size: 1.8rem; 
+            font-weight: bold; 
+            transform: translateY(1mm);
+        }
         
         .logo-arrow { 
             color: var(--gold); 
@@ -256,7 +262,7 @@
             const bg = document.getElementById('bgPattern');
             if (bg) {
                 bg.innerHTML = '';
-                // Повече елементи за по-плътна мрежа
+                // 60 елемента със случаен символ за "органичен" хаос
                 for(let i = 0; i < 60; i++) {
                     const d = document.createElement('div');
                     d.className = 'currency-item';
@@ -269,7 +275,8 @@
                     const lOff = (Math.random() * 30 - 15).toFixed(0) + 'px';
                     const tOff = (Math.random() * 30 - 15).toFixed(0) + 'px';
                     
-                    const isEuro = i % 2 === 0;
+                    // Премахнат шахматния ред - символът се избира на случаен принцип
+                    const isEuro = Math.random() > 0.5;
                     const content = isEuro 
                         ? '<span class="bg-euro-text">€</span>' 
                         : '<img src="icon_512.svg" class="bg-lion-img" onerror="this.style.display=\'none\'">';
