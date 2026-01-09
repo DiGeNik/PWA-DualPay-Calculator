@@ -12,8 +12,6 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     
     <link rel="manifest" href="manifest.json">
-    <link rel="icon" type="image/svg+xml" href="icon_192.svg">
-    <link rel="apple-touch-icon" href="icon_192.svg">
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -38,7 +36,7 @@
 
         .artistic-font { font-family: 'Comfortaa', cursive; }
 
-        /* Динамичен шахматен фон */
+        /* Шахматен фон */
         .bg-pattern {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: -1; display: grid;
@@ -48,19 +46,17 @@
 
         .currency-item { 
             display: flex; align-items: center; justify-content: center; 
-            opacity: 0.08; font-size: 1.5rem; font-weight: 800;
+            opacity: 0.08; font-weight: 800;
         }
 
         @keyframes complex-float {
             0%, 100% { transform: translateY(0) rotate(0deg) scale(1); }
-            33% { transform: translateY(-15px) rotate(5deg) scale(1.05); }
-            66% { transform: translateY(10px) rotate(-5deg) scale(0.95); }
+            33% { transform: translateY(-15px) rotate(8deg) scale(1.1); }
+            66% { transform: translateY(10px) rotate(-8deg) scale(0.9); }
         }
 
-        .bg-symbol { animation: complex-float 8s infinite ease-in-out; display: inline-block; }
-        .currency-item:nth-child(even) .bg-symbol { animation-delay: -4s; }
+        .bg-symbol { animation: complex-float 8s infinite ease-in-out; display: flex; align-items: center; justify-content: center; }
 
-        /* Основен прозорец */
         .app-window {
             background-color: rgba(255, 255, 255, 0.45);
             border: 1px solid rgba(255, 255, 255, 0.7);
@@ -70,7 +66,7 @@
             box-shadow: 0 40px 100px -20px rgba(0,0,0,0.12);
         }
 
-        /* Лого плочка */
+        /* Лого плочка с ТВОЯ SVG ЛЪВ */
         .logo-tile {
             width: 115px; height: 85px;
             background-color: var(--primary-blue);
@@ -78,40 +74,51 @@
             display: flex; align-items: center; justify-content: center;
             box-shadow: 0 15px 35px -5px rgba(37, 99, 235, 0.45);
             position: relative;
+            padding: 0 10px;
             overflow: hidden;
         }
 
-        .logo-svg { width: 85%; height: 85%; object-fit: contain; }
-
-        .logo-fallback {
-            display: flex; align-items: center; justify-content: center;
-            gap: 4px; color: var(--gold);
+        .logo-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            height: 100%;
         }
 
-        /* Входни полета */
+        .logo-eur { color: var(--gold); font-size: 1.8rem; font-weight: bold; }
+        .logo-arrow { color: var(--gold); font-size: 1.1rem; transform: translateX(-1mm); }
+        
+        /* Използване на твоя файл icon_512.svg */
+        .lion-img { 
+            height: 70px; 
+            width: auto; 
+            margin-right: -3mm; /* Изтеглен надясно за визуален баланс */
+            z-index: 1;
+        }
+
+        .fallback-text {
+            color: var(--gold);
+            font-size: 1.2rem;
+            font-weight: 900;
+            margin-right: 2px;
+        }
+
         .input-field {
             background-color: #fef9c3 !important;
             border: 2px solid #fde047;
             border-radius: 1.25rem;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            transition: all 0.25s ease;
         }
-        .input-field:focus { 
-            border-color: var(--gold); 
-            outline: none; 
-            transform: translateY(-2px);
-        }
+        .input-field:focus { border-color: var(--gold); outline: none; transform: translateY(-1px); }
 
-        /* Segmented Control */
         .segmented-control {
             background: rgba(37, 99, 235, 0.08);
             border-radius: 1.2rem;
             padding: 5px;
         }
-        .segment-btn.active { 
-            background: white; 
-            color: var(--primary-blue); 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08); 
-        }
+        .segment-btn { transition: all 0.3s ease; color: #64748b; font-size: 10px; font-weight: 900; text-transform: uppercase; }
+        .segment-btn.active { background: white; color: var(--primary-blue); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
 
         .pulse-error { animation: pulse 2s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .6; } }
@@ -126,12 +133,11 @@
     <div class="max-w-md w-full app-window p-8 sm:p-10 relative">
         <div class="flex flex-col items-center mb-8">
             <div class="logo-tile mb-4">
-                <!-- Използваме icon_512.svg за логото -->
-                <img src="icon_512.svg" alt="Logo" class="logo-svg" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                <div class="logo-fallback artistic-font" style="display:none;">
-                    <span style="font-size: 1.8rem;">€</span>
-                    <span style="font-size: 1.2rem; transform: translateX(-1px);">↔</span>
-                    <span style="font-size: 1.3rem; margin-right: -4px;">лв</span>
+                <div class="logo-inner artistic-font">
+                    <span class="logo-eur">€</span>
+                    <span class="logo-arrow">↔</span>
+                    <!-- Твоята икона със защитен механизъм -->
+                    <img src="icon_512.svg" class="lion-img" alt="лв" onerror="this.outerHTML='<span class=\'fallback-text\'>лв</span>'">
                 </div>
             </div>
             <h1 class="text-3xl font-black text-slate-800 artistic-font">DualPay</h1>
@@ -159,8 +165,8 @@
             </div>
 
             <div class="segmented-control flex">
-                <button onclick="setMode('EUR')" id="btnEur" class="segment-btn active flex-1 py-3 rounded-xl text-[10px] font-black uppercase">Върни в €</button>
-                <button onclick="setMode('BGN')" id="btnBgn" class="segment-btn flex-1 py-3 rounded-xl text-[10px] font-black uppercase text-slate-500">Върни в лв</button>
+                <button onclick="setMode('EUR')" id="btnEur" class="segment-btn active flex-1 py-3 rounded-xl">Върни в €</button>
+                <button onclick="setMode('BGN')" id="btnBgn" class="segment-btn flex-1 py-3 rounded-xl">Върни в лв</button>
             </div>
 
             <div id="resultBox" class="mt-4 p-8 rounded-[2.5rem] bg-white/80 text-center border-2 border-emerald-500/30 hidden">
@@ -180,31 +186,13 @@
     </div>
 
     <script>
-        // Корекция за Service Worker: Не се опитвайте да регистрирате, ако сме в blob/sandbox среда
-        if ('serviceWorker' in navigator && !window.location.href.includes('blob:')) {
-            window.addEventListener('load', function() {
-                // Използваме само относителни пътища и избягваме грешки при невалидни протоколи
-                try {
-                    navigator.serviceWorker.register('./sw.js').then(function() { 
-                        console.log('PWA Active'); 
-                    }).catch(function(err) {
-                        console.log('PWA Registration bypassed in preview environment');
-                    });
-                } catch (e) {
-                    console.log('Service Worker registration not possible here');
-                }
-            });
-        }
-
         const RATE = 1.95583;
         let mode = 'EUR';
 
         function setMode(m) {
             mode = m;
             document.getElementById('btnEur').classList.toggle('active', m === 'EUR');
-            document.getElementById('btnEur').classList.toggle('text-slate-500', m !== 'EUR');
             document.getElementById('btnBgn').classList.toggle('active', m === 'BGN');
-            document.getElementById('btnBgn').classList.toggle('text-slate-500', m !== 'BGN');
             calculate();
         }
 
@@ -212,10 +200,8 @@
             const due = parseFloat(document.getElementById('dueAmount').value) || 0;
             const bgn = parseFloat(document.getElementById('payBgn').value) || 0;
             const eur = parseFloat(document.getElementById('payEur').value) || 0;
-            
             const totalPaidEur = eur + (bgn / RATE);
             const dueInEur = due / RATE;
-            
             const res = document.getElementById('resultBox');
             const err = document.getElementById('errorBox');
 
@@ -230,7 +216,6 @@
                 res.classList.remove('hidden');
                 const diffEur = Math.max(0, totalPaidEur - dueInEur);
                 const diffBgn = diffEur * RATE;
-
                 if (mode === 'EUR') {
                     document.getElementById('changeValue').innerText = diffEur.toFixed(2) + ' €';
                     document.getElementById('changeSecondary').innerText = 'еквивалент: ' + diffBgn.toFixed(2) + ' лв';
@@ -238,9 +223,7 @@
                     document.getElementById('changeValue').innerText = diffBgn.toFixed(2) + ' лв';
                     document.getElementById('changeSecondary').innerText = 'еквивалент: ' + diffEur.toFixed(2) + ' €';
                 }
-            } else {
-                res.classList.add('hidden');
-            }
+            } else { res.classList.add('hidden'); }
         }
 
         document.querySelectorAll('input').forEach(i => i.addEventListener('input', calculate));
@@ -249,11 +232,12 @@
             const bg = document.getElementById('bgPattern');
             if (bg) {
                 bg.innerHTML = '';
-                for(let i = 0; i < 30; i++) {
+                for(let i = 0; i < 25; i++) {
                     const d = document.createElement('div');
                     d.className = 'currency-item';
-                    const symbol = i % 2 === 0 ? '€' : 'лв';
-                    d.innerHTML = '<span class="bg-symbol">' + symbol + '</span>';
+                    const delay = (Math.random() * -8).toFixed(2) + 's';
+                    const content = i % 2 === 0 ? '€' : 'лв';
+                    d.innerHTML = `<span class="bg-symbol artistic-font text-2xl" style="animation-delay: ${delay}">${content}</span>`;
                     bg.appendChild(d);
                 }
             }
