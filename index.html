@@ -36,7 +36,7 @@
 
         .artistic-font { font-family: 'Comfortaa', cursive; }
 
-        /* Динамичен артистичен фон */
+        /* Динамичен артистичен фон с едри елементи */
         .bg-pattern {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: -1; display: grid;
@@ -52,8 +52,8 @@
 
         @keyframes complex-float {
             0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
-            33% { transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(1.1); }
-            66% { transform: translate(calc(var(--tx) * -1), calc(var(--ty) * -0.5)) rotate(calc(var(--rot) * -1)) scale(0.9); }
+            33% { transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(1.15); }
+            66% { transform: translate(calc(var(--tx) * -1), calc(var(--ty) * -0.5)) rotate(calc(var(--rot) * -1.5)) scale(0.85); }
         }
 
         .bg-symbol { 
@@ -62,9 +62,14 @@
         }
 
         .bg-lion-img {
-            width: 80px;
+            width: 95px; /* Увеличени едри лъвове */
             height: auto;
             filter: grayscale(100%) brightness(0.6);
+        }
+
+        .bg-euro-text {
+            font-size: 3.5rem; /* По-едри евро символи */
+            font-weight: 800;
         }
 
         .app-window {
@@ -98,16 +103,16 @@
 
         .logo-eur { color: var(--gold); font-size: 1.8rem; font-weight: bold; }
         
-        /* Стрелката дръпната с 1мм надясно (сега е 2.5mm) */
+        /* Стрелката дръпната с 1мм надясно спрямо предната версия (общо 3.5mm) */
         .logo-arrow { 
             color: var(--gold); 
             font-size: 1.1rem; 
-            transform: translateX(2.5mm); 
+            transform: translateX(3.5mm); 
             z-index: 2;
         }
         
         .lion-img { 
-            height: 62px; 
+            height: 75px; /* Увеличен размер на лъва в логото */
             width: auto; 
             margin-right: -3mm; 
             z-index: 1;
@@ -247,30 +252,28 @@
             const bg = document.getElementById('bgPattern');
             if (bg) {
                 bg.innerHTML = '';
-                // Генерираме 30 символа за по-плътен хаос
-                for(let i = 0; i < 30; i++) {
+                for(let i = 0; i < 35; i++) { // Малко повече елементи
                     const d = document.createElement('div');
                     d.className = 'currency-item';
                     
-                    // Артистичен хаос: случайни параметри за всеки символ
-                    const dur = (8 + Math.random() * 12).toFixed(2) + 's';
+                    const dur = (10 + Math.random() * 15).toFixed(2) + 's';
                     const delay = (Math.random() * -20).toFixed(2) + 's';
-                    const tx = (Math.random() * 40 - 20).toFixed(0) + 'px';
-                    const ty = (Math.random() * 40 - 20).toFixed(0) + 'px';
-                    const rot = (Math.random() * 20 - 10).toFixed(0) + 'deg';
-                    const leftOffset = (Math.random() * 30 - 15).toFixed(0) + 'px';
-                    const topOffset = (Math.random() * 30 - 15).toFixed(0) + 'px';
+                    const tx = (Math.random() * 60 - 30).toFixed(0) + 'px';
+                    const ty = (Math.random() * 60 - 30).toFixed(0) + 'px';
+                    const rot = (Math.random() * 30 - 15).toFixed(0) + 'deg';
+                    const lOff = (Math.random() * 40 - 20).toFixed(0) + 'px';
+                    const tOff = (Math.random() * 40 - 20).toFixed(0) + 'px';
                     
                     const isEuro = i % 2 === 0;
                     const content = isEuro 
-                        ? '<span class="text-3xl">€</span>' 
+                        ? '<span class="bg-euro-text">€</span>' 
                         : '<img src="icon_512.svg" class="bg-lion-img" onerror="this.style.display=\'none\'">';
                     
                     d.innerHTML = `
                         <span class="bg-symbol artistic-font" 
                               style="--dur: ${dur}; --tx: ${tx}; --ty: ${ty}; --rot: ${rot}; 
                                      animation-delay: ${delay}; 
-                                     left: ${leftOffset}; top: ${topOffset};">
+                                     left: ${lOff}; top: ${tOff};">
                             ${content}
                         </span>`;
                     bg.appendChild(d);
