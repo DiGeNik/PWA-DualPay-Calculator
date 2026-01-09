@@ -36,7 +36,7 @@
 
         .artistic-font { font-family: 'Comfortaa', cursive; }
 
-        /* Шахматен фон */
+        /* Шахматен фон с лъвове и евро */
         .bg-pattern {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: -1; display: grid;
@@ -46,7 +46,7 @@
 
         .currency-item { 
             display: flex; align-items: center; justify-content: center; 
-            opacity: 0.08; font-weight: 800;
+            opacity: 0.12; font-weight: 800;
         }
 
         @keyframes complex-float {
@@ -55,7 +55,16 @@
             66% { transform: translateY(10px) rotate(-8deg) scale(0.9); }
         }
 
-        .bg-symbol { animation: complex-float 8s infinite ease-in-out; display: flex; align-items: center; justify-content: center; }
+        .bg-symbol { 
+            animation: complex-float 10s infinite ease-in-out; 
+            display: flex; align-items: center; justify-content: center; 
+        }
+
+        .bg-lion-img {
+            width: 45px;
+            height: auto;
+            filter: grayscale(100%) brightness(0.5); /* Дискретен вид за фона */
+        }
 
         .app-window {
             background-color: rgba(255, 255, 255, 0.45);
@@ -66,7 +75,7 @@
             box-shadow: 0 40px 100px -20px rgba(0,0,0,0.12);
         }
 
-        /* Лого плочка с ТВОЯ SVG ЛЪВ */
+        /* Лого плочка */
         .logo-tile {
             width: 115px; height: 85px;
             background-color: var(--primary-blue);
@@ -89,11 +98,10 @@
         .logo-eur { color: var(--gold); font-size: 1.8rem; font-weight: bold; }
         .logo-arrow { color: var(--gold); font-size: 1.1rem; transform: translateX(-1mm); }
         
-        /* Използване на твоя файл icon_512.svg */
         .lion-img { 
             height: 70px; 
             width: auto; 
-            margin-right: -3mm; /* Изтеглен надясно за визуален баланс */
+            margin-right: -3mm; 
             z-index: 1;
         }
 
@@ -136,7 +144,6 @@
                 <div class="logo-inner artistic-font">
                     <span class="logo-eur">€</span>
                     <span class="logo-arrow">↔</span>
-                    <!-- Твоята икона със защитен механизъм -->
                     <img src="icon_512.svg" class="lion-img" alt="лв" onerror="this.outerHTML='<span class=\'fallback-text\'>лв</span>'">
                 </div>
             </div>
@@ -235,14 +242,21 @@
                 for(let i = 0; i < 25; i++) {
                     const d = document.createElement('div');
                     d.className = 'currency-item';
-                    const delay = (Math.random() * -8).toFixed(2) + 's';
-                    const content = i % 2 === 0 ? '€' : 'лв';
-                    d.innerHTML = `<span class="bg-symbol artistic-font text-2xl" style="animation-delay: ${delay}">${content}</span>`;
+                    const delay = (Math.random() * -10).toFixed(2) + 's';
+                    
+                    // Редуване на Евро и твоя файл icon_512.svg
+                    const isEuro = i % 2 === 0;
+                    const content = isEuro 
+                        ? '<span class="text-3xl">€</span>' 
+                        : '<img src="icon_512.svg" class="bg-lion-img" onerror="this.style.display=\'none\'">';
+                    
+                    d.innerHTML = `<span class="bg-symbol artistic-font" style="animation-delay: ${delay}">${content}</span>`;
                     bg.appendChild(d);
                 }
             }
         }
         window.addEventListener('DOMContentLoaded', initBackground);
+        window.addEventListener('resize', initBackground);
     </script>
 </body>
 </html>
