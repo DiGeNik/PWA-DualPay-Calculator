@@ -36,7 +36,7 @@
 
         .artistic-font { font-family: 'Comfortaa', cursive; }
 
-        /* Динамичен артистичен фон с пълна липса на шахматен ред */
+        /* Динамичен артистичен фон с шахматно подреждане */
         .bg-pattern {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: -1; display: grid;
@@ -106,12 +106,11 @@
             height: 100%;
         }
 
-        /* Еврото е свалено с 1мм надолу за по-добър център */
         .logo-eur { 
             color: var(--gold); 
             font-size: 1.8rem; 
             font-weight: bold; 
-            transform: translateY(1mm);
+            transform: translateY(1mm); /* 1мм надолу */
         }
         
         .logo-arrow { 
@@ -262,21 +261,19 @@
             const bg = document.getElementById('bgPattern');
             if (bg) {
                 bg.innerHTML = '';
-                // 60 елемента със случаен символ за "органичен" хаос
-                for(let i = 0; i < 60; i++) {
+                // 64 елемента за пълна 8x8 мрежа
+                for(let i = 0; i < 64; i++) {
                     const d = document.createElement('div');
                     d.className = 'currency-item';
                     
                     const dur = (12 + Math.random() * 10).toFixed(2) + 's';
                     const delay = (Math.random() * -20).toFixed(2) + 's';
-                    const tx = (Math.random() * 50 - 25).toFixed(0) + 'px';
-                    const ty = (Math.random() * 50 - 25).toFixed(0) + 'px';
-                    const rot = (Math.random() * 40 - 20).toFixed(0) + 'deg';
-                    const lOff = (Math.random() * 30 - 15).toFixed(0) + 'px';
-                    const tOff = (Math.random() * 30 - 15).toFixed(0) + 'px';
+                    const tx = (Math.random() * 40 - 20).toFixed(0) + 'px';
+                    const ty = (Math.random() * 40 - 20).toFixed(0) + 'px';
+                    const rot = (Math.random() * 30 - 15).toFixed(0) + 'deg';
                     
-                    // Премахнат шахматния ред - символът се избира на случаен принцип
-                    const isEuro = Math.random() > 0.5;
+                    // Шахматно разположение въз основа на индекса i
+                    const isEuro = i % 2 === 0;
                     const content = isEuro 
                         ? '<span class="bg-euro-text">€</span>' 
                         : '<img src="icon_512.svg" class="bg-lion-img" onerror="this.style.display=\'none\'">';
@@ -284,8 +281,7 @@
                     d.innerHTML = `
                         <span class="bg-symbol artistic-font" 
                               style="--dur: ${dur}; --tx: ${tx}; --ty: ${ty}; --rot: ${rot}; 
-                                     animation-delay: ${delay}; 
-                                     left: ${lOff}; top: ${tOff};">
+                                     animation-delay: ${delay};">
                             ${content}
                         </span>`;
                     bg.appendChild(d);
