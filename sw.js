@@ -1,7 +1,9 @@
-const CACHE_NAME = 'dualpay-v2';
+const CACHE_NAME = 'dualpay-v4';
 const assets = [
   './index.html',
   './manifest.json',
+  './icon_192.svg',
+  './icon_512.svg',
   'https://cdn.tailwindcss.com'
 ];
 
