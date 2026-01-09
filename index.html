@@ -5,16 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>DualPay - Калкулатор за ресто</title>
     
-    <!-- PWA Мета тагове -->
+    <!-- PWA Настройки -->
     <meta name="theme-color" content="#2563eb">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="apple-mobile-web-app-title" content="DualPay">
     
-    <!-- Връзка към Манифеста -->
     <link rel="manifest" href="manifest.json">
-    <link rel="apple-touch-icon" href="https://cdn-icons-png.flaticon.com/512/2454/2454282.png">
+    <link rel="icon" type="image/svg+xml" href="icon_192.svg">
+    <link rel="apple-touch-icon" href="icon_192.svg">
 
     <!-- Шрифтове -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -45,7 +44,6 @@
         }
         .bg-symbol { animation: float 10s infinite ease-in-out; }
 
-        /* Прозорец */
         .app-window {
             background-color: rgba(255, 255, 255, 0.4);
             border: 1px solid rgba(255, 255, 255, 0.6);
@@ -61,6 +59,13 @@
             border-radius: 2rem;
             display: flex; align-items: center; justify-content: center;
             box-shadow: 0 20px 40px -10px rgba(37, 99, 235, 0.5);
+            overflow: hidden;
+        }
+
+        .logo-img {
+            width: 85%;
+            height: 85%;
+            object-fit: contain;
         }
 
         .input-field {
@@ -86,7 +91,7 @@
     <div class="max-w-md w-full app-window p-8 sm:p-12 relative">
         <div class="flex flex-col items-center mb-10">
             <div class="logo-tile mb-4">
-                <span class="text-3xl text-amber-500 artistic-font">€ ↔ лв</span>
+                <img src="icon_512.svg" alt="DualPay Logo" class="logo-img" onerror="this.src='icon_192.svg'; this.onerror=function(){this.outerHTML='<span class=\'text-3xl text-amber-500 artistic-font\'>€ ↔ лв</span>'}">
             </div>
             <h1 class="text-3xl font-black text-slate-800 artistic-font">DualPay</h1>
             <p class="text-slate-500 text-[10px] font-bold uppercase tracking-widest">Smart Cash Control</p>
@@ -131,19 +136,13 @@
     </div>
 
     <script>
-        // Корекция на регистрацията на Service Worker за избягване на грешки в Preview режим
+        // Инициализация на Service Worker
         if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                // Регистрираме само ако сме на реален домейн (не в blob или localhost без поддръжка)
-                if (window.location.protocol === 'https:' || window.location.hostname === 'localhost') {
+            window.addEventListener('load', function() {
+                if (location.protocol === 'https:' || location.hostname === 'localhost') {
                     navigator.serviceWorker.register('./sw.js')
-                        .then(() => console.log('PWA Ready'))
-                        .catch(err => {
-                            // Игнорираме грешки в среди за разработка
-                            if (!window.location.host.includes('goog')) {
-                                console.error('PWA Error:', err);
-                            }
-                        });
+                        .then(function() { console.log('PWA Ready'); })
+                        .catch(function(err) { console.error('PWA Fail:', err); });
                 }
             });
         }
@@ -159,9 +158,13 @@
         }
 
         function calculate() {
-            const due = parseFloat(document.getElementById('dueAmount').value) || 0;
-            const bgn = parseFloat(document.getElementById('payBgn').value) || 0;
-            const eur = parseFloat(document.getElementById('payEur').value) || 0;
+            const dueInput = document.getElementById('dueAmount');
+            const bgnInput = document.getElementById('payBgn');
+            const eurInput = document.getElementById('payEur');
+            
+            const due = parseFloat(dueInput.value) || 0;
+            const bgn = parseFloat(bgnInput.value) || 0;
+            const eur = parseFloat(eurInput.value) || 0;
             
             const totalPaidEur = eur + (bgn / RATE);
             const dueInEur = due / RATE;
@@ -191,19 +194,25 @@
             }
         }
 
-        document.querySelectorAll('input').forEach(i => i.addEventListener('input', calculate));
+        // Слушатели за промяна
+        document.querySelectorAll('input').forEach(function(input) {
+            input.addEventListener('input', calculate);
+        });
 
-        // Фон
-        const bg = document.getElementById('bgPattern');
-        if (bg) {
-            bg.style.gridTemplateColumns = 'repeat(5, 1fr)';
-            for(let i=0; i<20; i++) {
-                const d = document.createElement('div');
-                d.className = 'currency-item';
-                d.innerHTML = `<span class="bg-symbol text-2xl font-bold">${i%2===0?'€':'лв'}</span>`;
-                bg.appendChild(d);
+        // Генериране на фонови символи
+        window.addEventListener('DOMContentLoaded', function() {
+            const bg = document.getElementById('bgPattern');
+            if (bg) {
+                bg.style.gridTemplateColumns = 'repeat(5, 1fr)';
+                for(let i = 0; i < 20; i++) {
+                    const d = document.createElement('div');
+                    d.className = 'currency-item';
+                    const symbol = i % 2 === 0 ? '€' : 'лв';
+                    d.innerHTML = '<span class="bg-symbol text-2xl font-bold">' + symbol + '</span>';
+                    bg.appendChild(d);
+                }
             }
-        }
+        });
     </script>
 </body>
 </html>
