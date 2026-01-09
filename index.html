@@ -68,11 +68,6 @@
             user-select: none;
         }
 
-        .bg-lev-icon { 
-            height: 7.5rem; 
-            width: auto;
-            filter: grayscale(1) brightness(0.2);
-        }
         .bg-eur-text { 
             font-size: 4rem; 
             color: #334155; 
@@ -234,8 +229,25 @@
     </div>
 
     <script>
-        // PWA SETUP
-        const manifest = {
+        /**
+         * PWA FINAL FIX: Премахване на несъвместими Service Worker методи за избягване на грешки.
+         */
+        
+        // 1. Динамична икона за инсталиране
+        function createIcon() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 512; canvas.height = 512;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = '#2563eb';
+            ctx.beginPath(); ctx.roundRect(0, 0, 512, 512, 100); ctx.fill();
+            ctx.fillStyle = '#f59e0b'; ctx.font = 'bold 300px Montserrat, Arial';
+            ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+            ctx.fillText('€', 256, 256);
+            return canvas.toDataURL('image/png');
+        }
+
+        // 2. Генериране на Manifest
+        const manifestData = {
             "name": "DualPay Change Calculator",
             "short_name": "DualPay",
             "start_url": ".",
@@ -243,27 +255,45 @@
             "background_color": "#dbeafe",
             "theme_color": "#2563eb",
             "icons": [{
-                "src": "https://raw.githubusercontent.com/DiNikolova/assets/main/icon-192.png",
-                "sizes": "192x192",
-                "type": "image/png"
+                "src": createIcon(),
+                "sizes": "512x512",
+                "type": "image/png",
+                "purpose": "any maskable"
             }]
         };
-        const blob = new Blob([JSON.stringify(manifest)], {type: 'application/json'});
-        document.querySelector('#manifest-link').setAttribute('href', URL.createObjectURL(blob));
+        const manifestString = JSON.stringify(manifestData);
+        const manifestBlob = new Blob([manifestString], {type: 'application/json'});
+        document.querySelector('#manifest-link').setAttribute('href', URL.createObjectURL(manifestBlob));
 
-        // Inline Service Worker for PC Installation
-        if ('serviceWorker' in navigator) {
-            const swCode = `self.addEventListener('fetch', function(e) { e.respondWith(fetch(e.request)); });`;
-            const swBlob = new Blob([swCode], {type: 'application/javascript'});
-            const swUrl = URL.createObjectURL(swBlob);
-            navigator.serviceWorker.register(swUrl).catch(err => console.log("SW failed", err));
+        // 3. SERVICE WORKER: Безопасна регистрация само в HTTPS среда (GitHub)
+        // Предотвратява грешката "ReferenceError: ServiceWorkerGlobalScope is not defined"
+        if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
+            window.addEventListener('load', () => {
+                // Използваме Blob само за Service Worker функционалност в браузъра
+                const swCode = `
+                    self.addEventListener('install', e => self.skipWaiting());
+                    self.addEventListener('activate', e => e.waitUntil(self.clients.claim()));
+                    self.addEventListener('fetch', e => e.respondWith(fetch(e.request).catch(() => new Response("Offline"))));
+                `;
+                const blob = new Blob([swCode], { type: 'text/javascript' });
+                const url = URL.createObjectURL(blob);
+                
+                navigator.serviceWorker.register(url)
+                    .then(() => console.log("PWA: Ready"))
+                    .catch(err => {
+                        // Ако Blob-а все още се блокира, опитваме със самия файл
+                        navigator.serviceWorker.register('./index.html').catch(() => {});
+                    });
+            });
         }
 
+        // --- ГРАФИЧНА И КАЛКУЛАЦИОННА ЛОГИКА ---
         const RATE = 1.95583;
         let targetChangeCurrency = 'EUR';
 
         function initBackground() {
             const bgPattern = document.getElementById('bgPattern');
+            if(!bgPattern) return;
             const cellSize = 180; 
             const cols = Math.ceil(window.innerWidth / cellSize);
             const rows = Math.ceil(window.innerHeight / cellSize);
@@ -285,7 +315,7 @@
         }
 
         window.addEventListener('resize', initBackground);
-        window.onload = initBackground;
+        window.addEventListener('DOMContentLoaded', initBackground);
 
         function setChangeCurrency(curr) {
             targetChangeCurrency = curr;
@@ -315,7 +345,10 @@
             errorBox.classList.add('hidden');
             if (due > 0 || paidInEur > 0) {
                 resultBox.classList.remove('hidden');
-                setTimeout(() => resultBox.classList.add('scale-100', 'opacity-100'), 10);
+                setTimeout(() => {
+                    resultBox.classList.add('scale-100', 'opacity-100');
+                    resultBox.classList.remove('scale-95', 'opacity-0');
+                }, 10);
                 const diffInEur = Math.max(0, paidInEur - dueInEur);
                 if (targetChangeCurrency === 'EUR') {
                     document.getElementById('changeValue').innerText = diffInEur.toFixed(2) + ' €';
@@ -325,12 +358,13 @@
                     document.getElementById('changeSecondary').innerText = 'еквивалент: ' + diffInEur.toFixed(2) + ' €';
                 }
             } else {
-                resultBox.classList.add('hidden');
+                resultBox.classList.add('hidden', 'scale-95', 'opacity-0');
             }
         }
 
         ['dueAmount', 'dueCurrency', 'payBgn', 'payEur'].forEach(id => {
-            document.getElementById(id).addEventListener('input', calculate);
+            const el = document.getElementById(id);
+            if(el) el.addEventListener('input', calculate);
         });
     </script>
 </body>
