@@ -40,12 +40,16 @@
         .bg-pattern {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: -1; display: grid;
-            grid-template-columns: repeat(8, 1fr);
+            /* Използваме променливи за колоните, за да ги контролираме в JS */
+            grid-template-columns: repeat(var(--cols, 8), 1fr);
             grid-template-rows: repeat(auto-fill, 1fr);
         }
 
         @media (max-width: 640px) {
-            .bg-pattern { grid-template-columns: repeat(4, 1fr); }
+            :root { --cols: 4; }
+        }
+        @media (min-width: 641px) {
+            :root { --cols: 8; }
         }
 
         .currency-item { 
@@ -110,7 +114,7 @@
             color: var(--gold); 
             font-size: 1.8rem; 
             font-weight: bold; 
-            transform: translateY(1mm); /* 1мм надолу */
+            transform: translateY(1mm); 
         }
         
         .logo-arrow { 
@@ -259,33 +263,41 @@
 
         function initBackground() {
             const bg = document.getElementById('bgPattern');
-            if (bg) {
-                bg.innerHTML = '';
-                // 64 елемента за пълна 8x8 мрежа
-                for(let i = 0; i < 64; i++) {
-                    const d = document.createElement('div');
-                    d.className = 'currency-item';
-                    
-                    const dur = (12 + Math.random() * 10).toFixed(2) + 's';
-                    const delay = (Math.random() * -20).toFixed(2) + 's';
-                    const tx = (Math.random() * 40 - 20).toFixed(0) + 'px';
-                    const ty = (Math.random() * 40 - 20).toFixed(0) + 'px';
-                    const rot = (Math.random() * 30 - 15).toFixed(0) + 'deg';
-                    
-                    // Шахматно разположение въз основа на индекса i
-                    const isEuro = i % 2 === 0;
-                    const content = isEuro 
-                        ? '<span class="bg-euro-text">€</span>' 
-                        : '<img src="icon_512.svg" class="bg-lion-img" onerror="this.style.display=\'none\'">';
-                    
-                    d.innerHTML = `
-                        <span class="bg-symbol artistic-font" 
-                              style="--dur: ${dur}; --tx: ${tx}; --ty: ${ty}; --rot: ${rot}; 
-                                     animation-delay: ${delay};">
-                            ${content}
-                        </span>`;
-                    bg.appendChild(d);
-                }
+            if (!bg) return;
+            
+            bg.innerHTML = '';
+            // Определяме броя колони според ширината на екрана
+            const cols = window.innerWidth <= 640 ? 4 : 8;
+            const rows = 10; // Достатъчно редове за запълване
+            const totalItems = cols * rows;
+
+            for(let i = 0; i < totalItems; i++) {
+                const row = Math.floor(i / cols);
+                const col = i % cols;
+                
+                const d = document.createElement('div');
+                d.className = 'currency-item';
+                
+                const dur = (12 + Math.random() * 10).toFixed(2) + 's';
+                const delay = (Math.random() * -20).toFixed(2) + 's';
+                const tx = (Math.random() * 40 - 20).toFixed(0) + 'px';
+                const ty = (Math.random() * 40 - 20).toFixed(0) + 'px';
+                const rot = (Math.random() * 30 - 15).toFixed(0) + 'deg';
+                
+                // Истинска шахматна логика: сумата от ред и колона определя символа
+                const isEuro = (row + col) % 2 === 0;
+                
+                const content = isEuro 
+                    ? '<span class="bg-euro-text">€</span>' 
+                    : '<img src="icon_512.svg" class="bg-lion-img" onerror="this.style.display=\'none\'">';
+                
+                d.innerHTML = `
+                    <span class="bg-symbol artistic-font" 
+                          style="--dur: ${dur}; --tx: ${tx}; --ty: ${ty}; --rot: ${rot}; 
+                                 animation-delay: ${delay};">
+                        ${content}
+                    </span>`;
+                bg.appendChild(d);
             }
         }
         window.addEventListener('DOMContentLoaded', initBackground);
