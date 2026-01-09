@@ -36,24 +36,29 @@
 
         .artistic-font { font-family: 'Comfortaa', cursive; }
 
-        /* Динамичен артистичен фон с едри елементи */
+        /* Динамичен артистичен фон с по-плътна мрежа */
         .bg-pattern {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: -1; display: grid;
-            grid-template-columns: repeat(5, 1fr);
+            grid-template-columns: repeat(8, 1fr); /* Увеличени колони за по-малко разстояние */
             grid-template-rows: repeat(auto-fill, 1fr);
+        }
+
+        @media (max-width: 640px) {
+            .bg-pattern { grid-template-columns: repeat(4, 1fr); }
         }
 
         .currency-item { 
             display: flex; align-items: center; justify-content: center; 
-            opacity: 0.12;
+            opacity: 0.1;
             position: relative;
+            min-height: 120px;
         }
 
         @keyframes complex-float {
             0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
-            33% { transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(1.15); }
-            66% { transform: translate(calc(var(--tx) * -1), calc(var(--ty) * -0.5)) rotate(calc(var(--rot) * -1.5)) scale(0.85); }
+            33% { transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(1.1); }
+            66% { transform: translate(calc(var(--tx) * -1), calc(var(--ty) * -0.5)) rotate(calc(var(--rot) * -1.5)) scale(0.9); }
         }
 
         .bg-symbol { 
@@ -62,13 +67,13 @@
         }
 
         .bg-lion-img {
-            width: 95px; /* Увеличени едри лъвове */
+            width: 85px; /* Леко коригиран размер */
             height: auto;
             filter: grayscale(100%) brightness(0.6);
         }
 
         .bg-euro-text {
-            font-size: 3.5rem; /* По-едри евро символи */
+            font-size: 2.2rem; /* Намален размер на еврото за по-добър баланс */
             font-weight: 800;
         }
 
@@ -103,7 +108,6 @@
 
         .logo-eur { color: var(--gold); font-size: 1.8rem; font-weight: bold; }
         
-        /* Стрелката дръпната с 1мм надясно спрямо предната версия (общо 3.5mm) */
         .logo-arrow { 
             color: var(--gold); 
             font-size: 1.1rem; 
@@ -112,7 +116,7 @@
         }
         
         .lion-img { 
-            height: 75px; /* Увеличен размер на лъва в логото */
+            height: 75px; 
             width: auto; 
             margin-right: -3mm; 
             z-index: 1;
@@ -252,17 +256,18 @@
             const bg = document.getElementById('bgPattern');
             if (bg) {
                 bg.innerHTML = '';
-                for(let i = 0; i < 35; i++) { // Малко повече елементи
+                // Повече елементи за по-плътна мрежа
+                for(let i = 0; i < 60; i++) {
                     const d = document.createElement('div');
                     d.className = 'currency-item';
                     
-                    const dur = (10 + Math.random() * 15).toFixed(2) + 's';
+                    const dur = (12 + Math.random() * 10).toFixed(2) + 's';
                     const delay = (Math.random() * -20).toFixed(2) + 's';
-                    const tx = (Math.random() * 60 - 30).toFixed(0) + 'px';
-                    const ty = (Math.random() * 60 - 30).toFixed(0) + 'px';
-                    const rot = (Math.random() * 30 - 15).toFixed(0) + 'deg';
-                    const lOff = (Math.random() * 40 - 20).toFixed(0) + 'px';
-                    const tOff = (Math.random() * 40 - 20).toFixed(0) + 'px';
+                    const tx = (Math.random() * 50 - 25).toFixed(0) + 'px';
+                    const ty = (Math.random() * 50 - 25).toFixed(0) + 'px';
+                    const rot = (Math.random() * 40 - 20).toFixed(0) + 'deg';
+                    const lOff = (Math.random() * 30 - 15).toFixed(0) + 'px';
+                    const tOff = (Math.random() * 30 - 15).toFixed(0) + 'px';
                     
                     const isEuro = i % 2 === 0;
                     const content = isEuro 
