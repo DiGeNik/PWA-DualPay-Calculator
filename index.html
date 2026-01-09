@@ -36,7 +36,7 @@
 
         .artistic-font { font-family: 'Comfortaa', cursive; }
 
-        /* Шахматен фон с лъвове и евро */
+        /* Шахматен фон */
         .bg-pattern {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: -1; display: grid;
@@ -61,9 +61,9 @@
         }
 
         .bg-lion-img {
-            width: 45px;
+            width: 75px; /* Увеличен размер за мрежата */
             height: auto;
-            filter: grayscale(100%) brightness(0.5); /* Дискретен вид за фона */
+            filter: grayscale(100%) brightness(0.6);
         }
 
         .app-window {
@@ -96,7 +96,14 @@
         }
 
         .logo-eur { color: var(--gold); font-size: 1.8rem; font-weight: bold; }
-        .logo-arrow { color: var(--gold); font-size: 1.1rem; transform: translateX(-1mm); }
+        
+        /* Стрелката преместена 4.5мм надясно спрямо предната позиция */
+        .logo-arrow { 
+            color: var(--gold); 
+            font-size: 1.1rem; 
+            transform: translateX(3.5mm); 
+            z-index: 2;
+        }
         
         .lion-img { 
             height: 70px; 
@@ -244,7 +251,6 @@
                     d.className = 'currency-item';
                     const delay = (Math.random() * -10).toFixed(2) + 's';
                     
-                    // Редуване на Евро и твоя файл icon_512.svg
                     const isEuro = i % 2 === 0;
                     const content = isEuro 
                         ? '<span class="text-3xl">€</span>' 
