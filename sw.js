@@ -1,19 +1,19 @@
-const CACHE_NAME = 'dualpay-cache-v1';
-const ASSETS = [
+const CACHE_NAME = 'dualpay-v1';
+const assets = [
   './',
   './index.html',
-  'https://cdn.tailwindcss.com',
-  'https://fonts.googleapis.com/css2?family=Comfortaa:wght@400;700&family=Montserrat:wght@400;600;800&display=swap'
+  './manifest.json',
+  'https://cdn.tailwindcss.com'
 ];
 
-self.addEventListener('install', (event) => {
+self.addEventListener('install', event => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(ASSETS))
+    caches.open(CACHE_NAME).then(cache => cache.addAll(assets))
   );
 });
 
-self.addEventListener('fetch', (event) => {
+self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request).then((response) => response || fetch(event.request))
+    caches.match(event.request).then(response => response || fetch(event.request))
   );
 });
