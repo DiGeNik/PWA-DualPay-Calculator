@@ -9,34 +9,27 @@
     <meta name="theme-color" content="#2563eb">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
     
-    <!-- Динамичен манифест с display: minimal-ui -->
-    <script id="pwa-manifest-script">
+    <script>
+        // Динамичен манифест - режим 'standalone' за независимо приложение
         (function() {
             const manifest = {
                 "name": "DualPay Smart Cash",
                 "short_name": "DualPay",
-                "start_url": ".",
-                "display": "minimal-ui",
+                "start_url": window.location.href,
+                "display": "standalone", 
                 "background_color": "#dbeafe",
                 "theme_color": "#2563eb",
                 "icons": [
                     {
-                        "src": "icon_192.svg",
-                        "sizes": "192x192",
-                        "type": "image/svg+xml",
-                        "purpose": "any maskable"
-                    },
-                    {
-                        "src": "icon_512.svg",
+                        "src": "https://cdn-icons-png.flaticon.com/512/2454/2454282.png",
                         "sizes": "512x512",
-                        "type": "image/svg+xml"
+                        "type": "image/png"
                     }
                 ]
             };
-            const stringManifest = JSON.stringify(manifest);
-            const blob = new Blob([stringManifest], {type: 'application/json'});
+            const blob = new Blob([JSON.stringify(manifest)], {type: 'application/json'});
             const manifestURL = URL.createObjectURL(blob);
             const link = document.createElement('link');
             link.rel = 'manifest';
@@ -62,13 +55,12 @@
             font-family: 'Montserrat', sans-serif; 
             background-color: var(--bg-blue); 
             margin: 0; padding: 0; 
-            overflow: hidden;
+            overflow-x: hidden;
             -webkit-tap-highlight-color: transparent;
         }
 
         .artistic-font { font-family: 'Comfortaa', cursive; }
 
-        /* Динамичен артистичен фон с шахматно подреждане */
         .bg-pattern {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: -1; display: grid;
@@ -76,18 +68,12 @@
             grid-template-rows: repeat(auto-fill, 1fr);
         }
 
-        @media (max-width: 640px) {
-            :root { --cols: 4; }
-        }
-        @media (min-width: 641px) {
-            :root { --cols: 8; }
-        }
+        @media (max-width: 640px) { :root { --cols: 4; } }
+        @media (min-width: 641px) { :root { --cols: 8; } }
 
         .currency-item { 
             display: flex; align-items: center; justify-content: center; 
-            opacity: 0.1;
-            position: relative;
-            min-height: 120px;
+            opacity: 0.1; position: relative; min-height: 120px;
         }
 
         @keyframes complex-float {
@@ -96,21 +82,8 @@
             66% { transform: translate(calc(var(--tx) * -1), calc(var(--ty) * -0.5)) rotate(calc(var(--rot) * -1.5)) scale(0.9); }
         }
 
-        .bg-symbol { 
-            animation: complex-float var(--dur) infinite ease-in-out; 
-            display: flex; align-items: center; justify-content: center;
-        }
-
-        .bg-lion-img {
-            width: 85px;
-            height: auto;
-            filter: grayscale(100%) brightness(0.6);
-        }
-
-        .bg-euro-text {
-            font-size: 2.2rem;
-            font-weight: 800;
-        }
+        .bg-symbol { animation: complex-float var(--dur) infinite ease-in-out; display: flex; align-items: center; justify-content: center; }
+        .bg-lion-img { width: 85px; height: auto; filter: grayscale(100%) brightness(0.6); }
 
         .app-window {
             background-color: rgba(255, 255, 255, 0.45);
@@ -121,7 +94,7 @@
             box-shadow: 0 40px 100px -20px rgba(0,0,0,0.12);
         }
 
-        /* Лого плочка - ВЪЗСТАНОВЕНА ВИЗИЯ */
+        /* ЛОГО ПЛОЧКА - ПРЕЦИЗНИ НАСТРОЙКИ */
         .logo-tile {
             width: 115px; height: 85px;
             background-color: var(--primary-blue);
@@ -145,28 +118,21 @@
             color: var(--gold); 
             font-size: 1.8rem; 
             font-weight: bold; 
-            transform: translateY(1mm); 
+            transform: translateY(1mm); /* Еврото 1мм надолу */
         }
         
         .logo-arrow { 
             color: var(--gold); 
             font-size: 1.1rem; 
-            transform: translateX(-1mm); /* Възстановено централно изместване */
+            transform: translateX(-1mm); /* Стрелката 1мм наляво */
             z-index: 2;
         }
         
         .lion-img { 
             height: 75px; 
             width: auto; 
-            margin-right: -2mm; /* Възстановен балансиран марджин */
+            margin-right: -2mm; /* Лъвът 2мм надясно */
             z-index: 1;
-        }
-
-        .fallback-text {
-            color: var(--gold);
-            font-size: 1.2rem;
-            font-weight: 900;
-            margin-right: 2px;
         }
 
         .input-field {
@@ -175,18 +141,14 @@
             border-radius: 1.25rem;
             transition: all 0.25s ease;
         }
-        .input-field:focus { border-color: var(--gold); outline: none; transform: translateY(-1px); }
 
         .segmented-control {
-            background: rgba(37, 99, 235, 0.08);
+            background: rgba(37, 99, 235, 0.1);
             border-radius: 1.2rem;
-            padding: 5px;
+            padding: 4px;
         }
         .segment-btn { transition: all 0.3s ease; color: #64748b; font-size: 10px; font-weight: 900; text-transform: uppercase; }
         .segment-btn.active { background: white; color: var(--primary-blue); box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
-
-        .pulse-error { animation: pulse 2s infinite; }
-        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: .6; } }
 
         input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
     </style>
@@ -201,7 +163,7 @@
                 <div class="logo-inner artistic-font">
                     <span class="logo-eur">€</span>
                     <span class="logo-arrow">↔</span>
-                    <img src="icon_512.svg" class="lion-img" alt="лв" onerror="this.outerHTML='<span class=\'fallback-text\'>лв</span>'">
+                    <img src="icon_512.svg" class="lion-img" alt="лв" onerror="this.outerHTML='<span style=\'color:var(--gold);font-weight:900;margin-right:2px\'>лв</span>'">
                 </div>
             </div>
             <h1 class="text-3xl font-black text-slate-800 artistic-font">DualPay</h1>
@@ -213,7 +175,7 @@
                 <label class="block text-[10px] font-bold text-slate-400 mb-1.5 uppercase pl-2 tracking-wider">Дължима сума</label>
                 <div class="relative">
                     <input type="number" id="dueAmount" step="0.01" inputmode="decimal" placeholder="0.00" class="input-field w-full px-6 py-4 text-3xl font-black text-red-600">
-                    <div class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold">BGN</div>
+                    <div class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 font-bold tracking-tighter">BGN</div>
                 </div>
             </div>
 
@@ -236,10 +198,10 @@
             <div id="resultBox" class="mt-4 p-8 rounded-[2.5rem] bg-white/80 text-center border-2 border-emerald-500/30 hidden">
                 <span class="text-[10px] font-black uppercase text-slate-400 tracking-widest">Ресто за връщане</span>
                 <div id="changeValue" class="text-5xl font-black text-emerald-600 artistic-font mt-2">0.00 €</div>
-                <div id="changeSecondary" class="text-slate-400 text-[11px] mt-2 font-bold italic"></div>
+                <div id="changeSecondary" class="text-slate-400 text-[11px] mt-2 font-bold italic tracking-tight"></div>
             </div>
 
-            <div id="errorBox" class="hidden p-4 bg-red-500 text-white rounded-2xl text-[10px] text-center font-black uppercase pulse-error tracking-widest">
+            <div id="errorBox" class="hidden p-4 bg-red-500 text-white rounded-2xl text-[10px] text-center font-black uppercase tracking-widest animate-pulse">
                 Недостатъчна сума
             </div>
         </div>
@@ -266,6 +228,7 @@
             const eur = parseFloat(document.getElementById('payEur').value) || 0;
             const totalPaidEur = eur + (bgn / RATE);
             const dueInEur = due / RATE;
+            
             const res = document.getElementById('resultBox');
             const err = document.getElementById('errorBox');
 
@@ -280,6 +243,7 @@
                 res.classList.remove('hidden');
                 const diffEur = Math.max(0, totalPaidEur - dueInEur);
                 const diffBgn = diffEur * RATE;
+                
                 if (mode === 'EUR') {
                     document.getElementById('changeValue').innerText = diffEur.toFixed(2) + ' €';
                     document.getElementById('changeSecondary').innerText = 'еквивалент: ' + diffBgn.toFixed(2) + ' лв';
@@ -295,42 +259,26 @@
         function initBackground() {
             const bg = document.getElementById('bgPattern');
             if (!bg) return;
-            
             bg.innerHTML = '';
             const cols = window.innerWidth <= 640 ? 4 : 8;
-            const rows = 10; 
-            const totalItems = cols * rows;
-
-            for(let i = 0; i < totalItems; i++) {
+            for(let i = 0; i < cols * 10; i++) {
                 const row = Math.floor(i / cols);
                 const col = i % cols;
-                
                 const d = document.createElement('div');
                 d.className = 'currency-item';
-                
                 const dur = (12 + Math.random() * 10).toFixed(2) + 's';
-                const delay = (Math.random() * -20).toFixed(2) + 's';
                 const tx = (Math.random() * 40 - 20).toFixed(0) + 'px';
                 const ty = (Math.random() * 40 - 20).toFixed(0) + 'px';
                 const rot = (Math.random() * 30 - 15).toFixed(0) + 'deg';
-                
                 const isEuro = (row + col) % 2 === 0;
-                
-                const content = isEuro 
-                    ? '<span class="bg-euro-text">€</span>' 
-                    : '<img src="icon_512.svg" class="bg-lion-img" onerror="this.style.display=\'none\'">';
-                
-                d.innerHTML = `
-                    <span class="bg-symbol artistic-font" 
-                          style="--dur: ${dur}; --tx: ${tx}; --ty: ${ty}; --rot: ${rot}; 
-                                 animation-delay: ${delay};">
-                        ${content}
-                    </span>`;
+                d.innerHTML = `<span class="bg-symbol artistic-font" style="--dur:${dur};--tx:${tx};--ty:${ty};--rot:${rot};animation-delay:${(Math.random()*-20).toFixed(2)}s;">
+                    ${isEuro ? '<span class="text-2xl font-black">€</span>' : '<img src="icon_512.svg" class="bg-lion-img" onerror="this.style.display=\'none\'">'}
+                </span>`;
                 bg.appendChild(d);
             }
         }
-        window.addEventListener('DOMContentLoaded', initBackground);
-        window.addEventListener('resize', initBackground);
+        window.onload = initBackground;
+        window.onresize = initBackground;
     </script>
 </body>
 </html>
