@@ -118,21 +118,23 @@
             color: var(--gold); 
             font-size: 1.8rem; 
             font-weight: bold; 
-            transform: translateY(1mm); /* Еврото 1мм надолу */
+            transform: translateY(1mm); 
         }
         
         .logo-arrow { 
             color: var(--gold); 
-            font-size: 1.3rem; /* Малко по-голям размер за плътност */
-            font-weight: 900; /* Максимална плътност */
-            transform: translateX(2mm); /* Стрелката 2мм надясно */
+            font-size: 1.4rem; 
+            font-weight: 900;
+            /* Използваме лек shadow за изкуствено удебеляване */
+            text-shadow: 0.5px 0 0 var(--gold), -0.5px 0 0 var(--gold); 
+            transform: translateX(3.5mm); /* Още малко надясно */
             z-index: 2;
         }
         
         .lion-img { 
             height: 75px; 
             width: auto; 
-            margin-right: -2mm; /* Лъвът 2мм надясно */
+            margin-right: -2mm; 
             z-index: 1;
         }
 
