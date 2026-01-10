@@ -14,35 +14,37 @@
     <link rel="apple-touch-icon" href="icon_192.svg">
     
     <!-- Динамичен манифест -->
-    <script>
-        const manifest = {
-            "name": "DualPay Smart Cash",
-            "short_name": "DualPay",
-            "start_url": "./change_calculator.html",
-            "display": "standalone",
-            "background_color": "#dbeafe",
-            "theme_color": "#2563eb",
-            "icons": [
-                {
-                    "src": "icon_192.svg",
-                    "sizes": "192x192",
-                    "type": "image/svg+xml",
-                    "purpose": "any maskable"
-                },
-                {
-                    "src": "icon_512.svg",
-                    "sizes": "512x512",
-                    "type": "image/svg+xml"
-                }
-            ]
-        };
-        const stringManifest = JSON.stringify(manifest);
-        const blob = new Blob([stringManifest], {type: 'application/json'});
-        const manifestURL = URL.createObjectURL(blob);
-        const link = document.createElement('link');
-        link.rel = 'manifest';
-        link.href = manifestURL;
-        document.head.appendChild(link);
+    <script id="pwa-manifest-script">
+        (function() {
+            const manifest = {
+                "name": "DualPay Smart Cash",
+                "short_name": "DualPay",
+                "start_url": ".",
+                "display": "standalone",
+                "background_color": "#dbeafe",
+                "theme_color": "#2563eb",
+                "icons": [
+                    {
+                        "src": "icon_192.svg",
+                        "sizes": "192x192",
+                        "type": "image/svg+xml",
+                        "purpose": "any maskable"
+                    },
+                    {
+                        "src": "icon_512.svg",
+                        "sizes": "512x512",
+                        "type": "image/svg+xml"
+                    }
+                ]
+            };
+            const stringManifest = JSON.stringify(manifest);
+            const blob = new Blob([stringManifest], {type: 'application/json'});
+            const manifestURL = URL.createObjectURL(blob);
+            const link = document.createElement('link');
+            link.rel = 'manifest';
+            link.href = manifestURL;
+            document.head.appendChild(link);
+        })();
     </script>
 
     <!-- Fonts -->
@@ -68,7 +70,6 @@
 
         .artistic-font { font-family: 'Comfortaa', cursive; }
 
-        /* Динамичен шахматен фон */
         .bg-pattern {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: -1; display: grid;
@@ -103,7 +104,6 @@
             animation: complex-float 15s infinite ease-in-out; 
         }
 
-        /* Glassmorphism прозорец */
         .app-window {
             background-color: rgba(255, 255, 255, 0.45);
             border: 1px solid rgba(255, 255, 255, 0.7);
@@ -113,7 +113,7 @@
             box-shadow: 0 40px 100px -20px rgba(0,0,0,0.12);
         }
 
-        /* Лого Плочка - ВЪЗСТАНОВЕНИ ПРЕЦИЗНИ ПОЗИЦИИ */
+        /* ЛОГО ПЛОЧКА - ПРЕЦИЗНИ НАСТРОЙКИ */
         .logo-tile {
             width: 115px; height: 85px;
             background-color: var(--primary-blue);
@@ -136,21 +136,22 @@
             color: var(--gold); 
             font-size: 1.8rem; 
             font-weight: bold; 
-            transform: translateY(1mm); /* 1мм надолу */
+            transform: translateY(1mm) !important; /* ФИКСИРАНО: 1мм надолу */
         }
         
         .logo-arrow { 
             color: var(--gold); 
             font-size: 1.1rem; 
-            transform: translateX(-1mm); /* 1мм наляво */
+            transform: translateX(-1mm) !important; /* ФИКСИРАНО: 1мм наляво */
             z-index: 2;
         }
         
         .lion-img { 
             height: 75px; 
             width: auto; 
-            margin-right: -2mm; /* 2мм надясно */
+            margin-right: -2mm !important; /* ФИКСИРАНО: 2мм надясно */
             z-index: 1;
+            display: block;
         }
 
         .fallback-text {
@@ -160,7 +161,6 @@
             margin-right: -2mm;
         }
 
-        /* Полета за въвеждане - ВЪЗСТАНОВЕНО ЖЪЛТО */
         .input-field {
             background-color: #fef9c3 !important;
             border: 2px solid #fde047;
@@ -315,16 +315,6 @@
                     bg.appendChild(d);
                 }
             }
-        }
-
-        // РЕГИСТРАЦИЯ НА SERVICE WORKER (За икона за инсталиране)
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                const swCode = `self.addEventListener('fetch', (event) => {});`;
-                const blob = new Blob([swCode], {type: 'text/javascript'});
-                const url = URL.createObjectURL(blob);
-                navigator.serviceWorker.register(url).catch(err => console.log('SW failed', err));
-            });
         }
 
         window.addEventListener('resize', initBackground);
