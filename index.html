@@ -11,9 +11,10 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="DualPay">
+    <link rel="apple-touch-icon" href="icon_192.svg">
     
     <!-- Динамичен манифест -->
-    <script>
+    <script id="pwa-manifest">
         const manifest = {
             "name": "DualPay Smart Cash",
             "short_name": "DualPay",
@@ -26,7 +27,8 @@
                 {
                     "src": "icon_192.svg",
                     "sizes": "192x192",
-                    "type": "image/svg+xml"
+                    "type": "image/svg+xml",
+                    "purpose": "any maskable"
                 },
                 {
                     "src": "icon_512.svg",
@@ -64,7 +66,6 @@
 
         .artistic-font { font-family: 'Comfortaa', cursive; }
 
-        /* Динамичен шахматен фон */
         .bg-pattern {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             z-index: -1; display: grid;
@@ -99,7 +100,6 @@
             animation: complex-float 15s infinite ease-in-out; 
         }
 
-        /* Glassmorphism прозорец */
         .app-window {
             background-color: rgba(255, 255, 255, 0.45);
             border: 1px solid rgba(255, 255, 255, 0.7);
@@ -109,7 +109,6 @@
             box-shadow: 0 40px 100px -20px rgba(0,0,0,0.12);
         }
 
-        /* Лого Плочка - ВЪЗСТАНОВЕНИ ПОЗИЦИИ */
         .logo-tile {
             width: 115px; height: 85px;
             background-color: var(--primary-blue);
@@ -132,20 +131,20 @@
             color: var(--gold); 
             font-size: 1.8rem; 
             font-weight: bold; 
-            transform: translateY(1mm); /* 1мм надолу */
+            transform: translateY(1mm); 
         }
         
         .logo-arrow { 
             color: var(--gold); 
             font-size: 1.1rem; 
-            transform: translateX(-1mm); /* 1мм наляво */
+            transform: translateX(-1mm); 
             z-index: 2;
         }
         
         .lion-img { 
             height: 75px; 
             width: auto; 
-            margin-right: -2mm; /* 2мм надясно (отрицателен марджин) */
+            margin-right: -2mm; 
             z-index: 1;
         }
 
@@ -156,7 +155,6 @@
             margin-right: -2mm;
         }
 
-        /* Полета за въвеждане - ВЪЗСТАНОВЕНО ЖЪЛТО */
         .input-field {
             background-color: #fef9c3 !important;
             border: 2px solid #fde047;
@@ -242,6 +240,7 @@
     </div>
 
     <script>
+        // --- КОНСТАНТИ И ЛОГИКА ---
         const RATE = 1.95583;
         let changeMode = 'EUR';
 
@@ -300,7 +299,7 @@
                 for (let c = 0; c < cols; c++) {
                     const d = document.createElement('div');
                     d.className = 'currency-item';
-                    const isEuro = (r + c) % 2 === 0; // Шахматно подреждане
+                    const isEuro = (r + c) % 2 === 0;
                     const delay = (Math.random() * -20).toFixed(2) + 's';
                     
                     const content = isEuro 
@@ -313,8 +312,34 @@
             }
         }
 
+        // --- SERVICE WORKER РЕГИСТРАЦИЯ (За икона за инсталиране) ---
+        async function registerSW() {
+            if ('serviceWorker' in navigator) {
+                try {
+                    // Кодът на Service Worker-а в стрингова променлива
+                    const swCode = `
+                        const CACHE_NAME = 'dualpay-v1';
+                        self.addEventListener('install', (e) => self.skipWaiting());
+                        self.addEventListener('fetch', (e) => e.respondWith(fetch(e.request).catch(() => caches.match(e.request))));
+                    `;
+                    const blob = new Blob([swCode], { type: 'text/javascript' });
+                    const swUrl = URL.createObjectURL(blob);
+                    
+                    // Регистрация
+                    await navigator.serviceWorker.register(swUrl);
+                    console.log('SW registered successfully');
+                } catch (e) {
+                    console.log('SW registration failed:', e);
+                }
+            }
+        }
+
         window.addEventListener('resize', initBackground);
-        window.addEventListener('load', initBackground);
+        window.addEventListener('load', () => {
+            initBackground();
+            registerSW(); // Стартираме регистрацията
+        });
+
         ['dueAmount', 'dueCurrency', 'payBgn', 'payEur'].forEach(id => {
             document.getElementById(id).addEventListener('input', calculate);
         });
